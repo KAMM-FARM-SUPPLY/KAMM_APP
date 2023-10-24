@@ -49,7 +49,7 @@ function Pending(props) {
                                 <View style = {styles.thumbnail}>
                                     <Avatar rounded source = {{ uri : item.Profile_picture }} size = {'medium'}  />
                                     <View style = {styles.Name}>
-                                        <Text style = {styles.Name_txt}>{item.Name}</Text>
+                                        <Text style = {styles.Name_txt}>{item.Name + " " + item.Given_name}</Text>
                                         <Text>{item.Phone_number}</Text>
                                         <Text>{item.Village}</Text>
                                     </View>
@@ -57,7 +57,7 @@ function Pending(props) {
         
                                 <View style = {styles.more_info}>
                                     <Avatar rounded source = {{ uri : item.Signature }} size = {'medium'}  />
-        
+                                    
                                 </View>
                             </TouchableOpacity>
                         )}

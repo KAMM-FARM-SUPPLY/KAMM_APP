@@ -3,7 +3,8 @@ import * as mime from 'react-native-mime-types'
 export default Reducer = (state = {
     'default_color' : 'blue',
     Loan_app_details : [],
-    Loan_app_screen_key : ''
+    Loan_app_screen_key : '',
+    Farmer_info_visit : false
 } , action ) => {
     switch(action.type){
         case 'change_color' : {
@@ -111,6 +112,18 @@ export default Reducer = (state = {
                 }
             }
         }
+
+
+        //Re-editing the information during visits farmers profile
+        case 'Farmer_info_visit' : {
+            return {
+                ...state , 
+                Farmer_info_visit : action.value
+            }
+        }
+
+        
+
         default :
             return state
     }

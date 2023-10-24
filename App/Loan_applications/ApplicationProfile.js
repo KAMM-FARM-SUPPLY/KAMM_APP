@@ -132,8 +132,6 @@ function ApplicationProfile(props) {
                       </TouchableOpacity>
                 
   
-                  
-             
           </View>
   
           <View style = {styles.info}>

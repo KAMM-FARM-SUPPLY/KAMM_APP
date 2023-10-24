@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux'
-import { Image as Compressor } from 'react-native-compressor';
+// import { Image as Compressor } from 'react-native-compressor';
 
 
 function NIN_Photos(props) {
@@ -18,6 +18,13 @@ function NIN_Photos(props) {
     console.log(redux_state['registration'])
 
     const dispatch = useDispatch()
+
+    useEffect(()=>{
+        if (redux_state['Farmer_info_visit'] != false){
+            setfront_side(redux_state['Farmer_info_visit'].Front_side_id)
+            setback_side(redux_state['Farmer_info_visit'].Hind_side_id)
+        }
+    },[])
 
   return (
     <ScrollView style = {{flex : 1}} contentContainerStyle = {styles.container_style}>
@@ -35,8 +42,8 @@ function NIN_Photos(props) {
                         quality: 1,
                     });
                     if (!result.canceled) {
-                        const result = await Compressor.compress(result.uri);
-                        console.log(result)
+                        // const result = await Compressor.compress(result.uri);
+                        // console.log(result)
                         setfront_side(result.uri)
                         setTimeout(()=>{
                             setAction(true)
@@ -124,7 +131,6 @@ function NIN_Photos(props) {
                 <Avatar rounded containerStyle = {{ backgroundColor : 'white' , elevation :  10,   }} icon = {{  name : 'camera' , color : '#246EE9', type : 'font-awesome' }} size = {'medium'} />
             </TouchableOpacity>
         </View>  
-        
             </TouchableOpacity>
         </View>
 

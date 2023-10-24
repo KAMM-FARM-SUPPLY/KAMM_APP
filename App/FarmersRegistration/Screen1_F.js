@@ -15,6 +15,7 @@ import FarmerProfile from './FarmerProfile.js'
 import Subcounty from '../Locations/Subcounty.js'
 import District from '../Locations/District.js'
 import Village from '../Locations/Village.js'
+import EmployeeSignature from './Registration/EmployeeSignature.js'
 import General from './Visits/General.js'
 import GeneralOverview from './Overview/GeneralOverview.js'
 import FarmersList from './Overview/FarmersList.js'
@@ -42,6 +43,7 @@ export const Screen1_F = ({navigation}) => {
           <Stack.Screen name = "Subcounty" component = {Subcounty} options={{headerShown : false}}/>
           <Stack.Screen name = "Village" component = {Village} options={{headerShown : false}}/>
           <Stack.Screen name = "Profile" component = {FarmerProfile} options={{headerShown : false}}/>
+          <Stack.Screen name = "Employee Signature" component = {EmployeeSignature} options = {{ headerShown : true}}/>
           <Stack.Screen name = "Farmers List" component = {FarmersList} options={{headerShown : false}}/>
         </Stack.Group>
       </Stack.Navigator>

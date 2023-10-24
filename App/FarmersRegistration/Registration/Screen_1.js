@@ -92,7 +92,7 @@ function Screen_1(props) {
     const onSubmit = () => {
         // Actions on submit button click.
 
-
+        dispatch({type : 'Add_field' , key : 'Added_by' , value : 3})
         
         dispatch({type : 'Add_field' , key : 'Coffee_acreage' , value : Coffee_coverage})
         dispatch({type : 'Add_field' , key : 'Ov_coffee_prod' , value : Ov_coffee_prod})
@@ -148,6 +148,33 @@ function Screen_1(props) {
 
       }
 
+
+
+    useEffect(()=>{
+
+        if (redux_state['Farmer_info_visit'] != false){
+            //Filling in the fields 
+            let info = redux_state['Farmer_info_visit']
+            //console.log(info)
+            setCoffee_coverage(String(info.Coffee_acreage))
+            setOv_coffee_prod(String(info.Ov_coffee_prod))
+            set_Total_land_acreage(String(info.Total_land_acreage))
+            setNo_of_trees(String(info.No_of_trees))
+            setUnproductive_trees(String(info.Unproductive_trees))
+            setNIN(String(info.NIN_no))
+            setNIN_char(14)
+            setSurname(info.Name)
+            setGivenName(info.Given_name)
+            setMarital_status(info.Marital_status)
+            setValue(String(info.Phone_number))
+            setYear_of_birth(new Date())
+            setGender(info.Gender)
+            setValid(true)
+
+        }
+    
+    },[])
+
     
   return (
     <ScrollView style = {{flex : 1}} contentContainerStyle = {styles.container} >
@@ -198,40 +225,63 @@ function Screen_1(props) {
             </View>    
 
             
-            <View style = {{...styles.input , height : 0.14 * ScreenHeight}}>
-                <View style = {styles.error}>
-                    <Text>Telephone number *</Text>
-                    {(valid)?(
-                        <View style = {styles.validate_icon}>
-                            <Avatar rounded containerStyle = {{ backgroundColor : 'green' , elevation :10  }} size = {'small'} icon = {{  name : 'check' , color : 'white', type : 'font-awesome' , size : 16 }}  />
-                            <Text style = {{color : 'green'}}>Valid</Text>
+            
+
+            {
+                    (redux_state['Farmer_info_visit'] ? (
+                        <View style = {styles.input}>
+                            <Text>Phone Contact *</Text>
+                            <TextInput
+                                placeholder='Enter the new contact if any with +256...'
+                                autoCapitalize='words'
+                                style={styles.input_control}
+                                onChangeText={(text)=>{
+                                    setValue(text)
+                                }}
+                                value = {value}
+
+                            />
                         </View>
                     ) : (
-                        <View style = {{...styles.validate_icon , width : 0.28 * ScreenWidth}}>
-                            <Avatar rounded containerStyle = {{ backgroundColor : 'red' , elevation :10  }} size = {'small'} icon = {{  name : 'times' , color : 'white', type : 'font-awesome' , size : 16 }}  />
-                            <Text style = {{color : 'red'}}>Not valid</Text>
+                        <View style = {{...styles.input , height : 0.14 * ScreenHeight}}>
+                            <View style = {styles.error}>
+                                <Text>Telephone number *</Text>
+                                {(valid)?(
+                                    <View style = {styles.validate_icon}>
+                                        <Avatar rounded containerStyle = {{ backgroundColor : 'green' , elevation :10  }} size = {'small'} icon = {{  name : 'check' , color : 'white', type : 'font-awesome' , size : 16 }}  />
+                                        <Text style = {{color : 'green'}}>Valid</Text>
+                                    </View>
+                                ) : (
+                                    <View style = {{...styles.validate_icon , width : 0.28 * ScreenWidth}}>
+                                        <Avatar rounded containerStyle = {{ backgroundColor : 'red' , elevation :10  }} size = {'small'} icon = {{  name : 'times' , color : 'white', type : 'font-awesome' , size : 16 }}  />
+                                        <Text style = {{color : 'red'}}>Not valid</Text>
+                                    </View>
+
+                                )}
+                            </View>
+                        <PhoneInput
+                            containerStyle = {{...styles.input_control , height : 52 , elevation : 0 , backgroundColor : 'transparent' , borderBottomColor : valid ? 'black' :'red'}}
+                            ref={phoneInput}
+                            defaultValue={value}
+                            //value={'758989094'}
+                            defaultCode="UG"
+                            layout="first"
+                            onChangeText={(text) => {
+                                setValue(text);
+                                validate_number(text)
+                            }}
+                            onChangeFormattedText={(text) => {
+                                setFormattedValue(text);
+                            }}
+                            withDarkTheme = {false}
+                            withShadow
+                        />  
+
+               
+
                         </View>
-
-                    )}
-                </View>
-                <PhoneInput
-                        containerStyle = {{...styles.input_control , height : 52 , elevation : 0 , backgroundColor : 'transparent' , borderBottomColor : valid ? 'black' :'red'}}
-                        ref={phoneInput}
-                        defaultValue={value}
-                        defaultCode="UG"
-                        layout="first"
-                        onChangeText={(text) => {
-                            setValue(text);
-                            validate_number(text)
-                        }}
-                        onChangeFormattedText={(text) => {
-                            setFormattedValue(text);
-                        }}
-                        withDarkTheme = {false}
-                        withShadow
-                    />    
-
-            </View>
+                    ))
+                }  
             
               
             
@@ -274,8 +324,10 @@ function Screen_1(props) {
                     autoCapitalize='words'
                     style={styles.input_control}
                     onChangeText={(text)=>{
-
+                        setCoffee_coverage(text)
                     }}
+                    value = {Ov_coffee_prod}
+
                 />
             </View>
 
@@ -283,6 +335,7 @@ function Screen_1(props) {
                 <Text>Overall Coffee production *</Text>
                 <TextInput
                     placeholder='Enter the coffee production'
+                    value = {Ov_coffee_prod}
                     autoCapitalize='words'
                     style={styles.input_control}
                     onChangeText={(text)=>{
@@ -295,6 +348,7 @@ function Screen_1(props) {
                 <Text>Total Land coverage *</Text>
                 <TextInput
                     placeholder='Total Land coverage'
+                    value = {Total_land_acreage}
                     autoCapitalize='words'
                     style={styles.input_control}
                     onChangeText={(text)=>{
@@ -308,6 +362,7 @@ function Screen_1(props) {
                 <TextInput
                     placeholder='Enter the number of coffee plants'
                     autoCapitalize='words'
+                    value = {No_of_trees}
                     style={styles.input_control}
                     onChangeText={(text)=>{
                         setNo_of_trees(text)
@@ -320,6 +375,7 @@ function Screen_1(props) {
                 <TextInput
                     placeholder='Enter the number of unproductive trees'
                     autoCapitalize='words'
+                    value = {Unproductive_trees}
                     style={styles.input_control}
                     onChangeText={(text)=>{
                         setUnproductive_trees(text)

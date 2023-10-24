@@ -16,6 +16,13 @@ function Profile_pic(props) {
     const redux_state = useSelector(state => state.Reducer)
     const dispatch = useDispatch()
 
+    useEffect(()=>{
+        if (redux_state['Farmer_info_visit'] != false) {
+            SetPic(redux_state['Farmer_info_visit'].Profile_picture)
+            setAction(true)
+        }
+    },[])
+
   return (
     <ScrollView contentContainerStyle = {styles.container_style} style = {styles.container}>
             <TouchableOpacity style = {styles.input_container_2} onPress = {
@@ -68,7 +75,11 @@ function Profile_pic(props) {
            <View style = {styles.button}>
                 <Button onPress = {()=>{
                     dispatch({type : 'Add_reg_pic' , key : 'Profile-photo' , pic : Pic})
-                    props.navigation.navigate("Signature")
+                    if (redux_state['Farmer_info_visit'] == false){
+                        props.navigation.navigate("Signature")
+                    } else {
+                        props.navigation.navigate("Employee Signature")
+                    }
                 }} title='Next' />
            </View>
             

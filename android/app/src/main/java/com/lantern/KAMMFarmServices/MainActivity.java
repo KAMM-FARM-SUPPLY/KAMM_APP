@@ -9,7 +9,6 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 import expo.modules.ReactActivityDelegateWrapper;
-import com.reactnativecompressor.CompressorPackage;
 
 public class MainActivity extends ReactActivity {
   @Override

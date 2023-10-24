@@ -17,6 +17,7 @@ export const Overview = (props) => {
         <TouchableOpacity style = {styles.item} onPress={()=>{
           //Instatiating the farmers holder data
             dispatch({type : 'Reg_Farmer'})
+            dispatch({type : 'Farmer_info_visit' , key : 'farmer profile' , value : false})
             props.navigation.navigate('District' , {'registration' : true})
         }}>
         <Avatar size="large" icon = {{ name : 'user' , type : 'font-awesome', color : '#246EE9' , size : 40 }} rounded = {false}/>
