@@ -6857,11 +6857,6 @@ react-native-color-picker@^0.6.0:
     prop-types "^15.5.10"
     tinycolor2 "^1.4.1"
 
-react-native-compressor@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-compressor/-/react-native-compressor-1.7.2.tgz#46ac8d506d98bcdd17cc7475958039fd3e98f935"
-  integrity sha512-HNlIom0qD3mE05S2p9T2jqqSiGSIuqqSQq5lYYTEXO3NohHvVAbHh40xK5jGh8faF5DVEiuFBXUM0RNJ9CRwxw==
-
 react-native-country-picker-modal@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-2.0.0.tgz#005421303349a81fedf5975e465405bb4b7312d5"

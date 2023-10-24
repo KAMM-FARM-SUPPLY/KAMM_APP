@@ -43,7 +43,7 @@ function Verified(props) {
                                     <Avatar rounded source = {{ uri : item.Profile_picture }} size = {'medium'}  />
                                     <View style = {styles.Name}>
                                         <Text style = {styles.Name_txt}>{item.Name + " " + item.Given_name}</Text>
-                                        <Text>+256758989094</Text>
+                                        <Text>{item.Phone_number}</Text>
                                         <Text>{item.Village}</Text>
                                     </View>
                                 </View>

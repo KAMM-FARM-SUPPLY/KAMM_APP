@@ -1,5 +1,5 @@
 import React , {useEffect , useState}from 'react'
-import {View , Text , Pressable , StyleSheet , TouchableOpacity , FlatList} from 'react-native'
+import {View , Text , Pressable , StyleSheet , TouchableOpacity , FlatList , ActivityIndicator} from 'react-native'
 import { ScreenHeight , ScreenWidth } from 'react-native-elements/dist/helpers'
 import {useDispatch, useSelector} from 'react-redux'
 import {Avatar} from 'react-native-elements'
@@ -11,7 +11,7 @@ import { Products } from '../../Helpers/Products'
 
 export const Category = (props) => {
 
-  const [Categories , setCategories] = useState([])
+  const [Categories , setCategories] = useState(null)
 
   const dispatch = useDispatch()
 
@@ -23,6 +23,15 @@ export const Category = (props) => {
   },[])
 
   const redux_state = useSelector(state => state.Reducer)
+
+  if (Categories == null){
+    return (
+      <View style = {styles.Indicator}>
+          <ActivityIndicator/>
+          <Text>Loading Applications...</Text>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.screen}>
@@ -79,8 +88,12 @@ const styles = StyleSheet.create({
     justifyContent : 'space-around',
     alignItems : 'center',
 
-
     
     
-  }
+  },
+  Indicator : {
+    flex : 1,
+    justifyContent : 'center',
+    alignItems : 'center'
+ },
 })

@@ -14,7 +14,7 @@ import com.facebook.soloader.SoLoader;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
-import com.reactnativecompressor.CompressorPackage;
+//import com.reactnativecompressor.CompressorPackage;
 
 //import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
@@ -36,7 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
         // Packages that cannot be autolinked yet can be added manually here, for example:
         // packages.add(new MyReactNativePackage());
         //packages.add(new RNDateTimePickerPackage());
-        packages.add(new CompressorPackage())
+        //packages.add(new CompressorPackage())
         return packages;
       }
 

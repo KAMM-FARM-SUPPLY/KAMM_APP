@@ -24,7 +24,6 @@ function Signature(props) {
       setRegistering(false)
       props.navigation.navigate("Profile" , {'Profile_info' : profile_info})
 
-
     }
 
     const onError = (message) => {
@@ -34,6 +33,14 @@ function Signature(props) {
 
     // Called after ref.current.readSignature() reads a non-empty base64 string
     const handleOK = (signature) => {
+
+      if ((redux_state['Farmer_info_visit'] != false)){
+
+        console.log(redux_state['registration'])
+        console.log(redux_state['registration_pics'])
+
+
+      }else {
         // dispatch({type : 'Add_field' , key : 'Signature' , value : signature})
         // console.log(signature)
         setRegistering(true)
@@ -45,10 +52,8 @@ function Signature(props) {
 
         Farmer.Register({...redux_state['registration'] , 'Signature' : signature} , form_data , handle_on_complete,onError)
 
+      }
         
-
-
-
     };
 
     // Called after ref.current.readSignature() reads an empty string
@@ -66,7 +71,7 @@ function Signature(props) {
         // ref.current.readSignature();
     };
 
-    // Called after ref.current.getData()
+    // Called after ref.current.getData()r
     const handleData = (data) => {
         console.log(data);
     };
@@ -78,15 +83,15 @@ function Signature(props) {
           textStyle={styles.spinnerTextStyle}
       />
       <SignatureScreen
-      ref={ref}
-      onEnd={handleEnd}
-      onOK={handleOK}
-      onEmpty={handleEmpty}
-      onClear={handleClear}
-      onGetData={handleData}
-      autoClear={true}
-      descriptionText={'Scribble your signature'}
-    />
+        ref={ref}
+        onEnd={handleEnd}
+        onOK={handleOK}
+        onEmpty={handleEmpty}
+        onClear={handleClear}
+        onGetData={handleData}
+        autoClear={true}
+        descriptionText={'Scribble your signature'}
+      />
     </View>
     
   )
