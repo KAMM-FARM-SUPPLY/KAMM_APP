@@ -1,7 +1,7 @@
 name: APP UPDATE
 on:
     push:
-      branches: [ "master", "Staging"]
+      branches: ["Staging"]
 
 jobs:
   update:
