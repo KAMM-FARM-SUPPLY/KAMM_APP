@@ -4,15 +4,32 @@ import {Avatar} from 'react-native-elements'
 import { ScreenHeight , ScreenWidth } from 'react-native-elements/dist/helpers'
 import FarmerLogic from '../../../Helpers/Farmer'
 import { Excel } from '../../../Helpers/Excel'
+import AppConstants from '../../../Constants/AppConstants'
+import {useDispatch, useSelector} from 'react-redux'
+
 
 
 
 function Pending(props) {
 
     const [Unverified_users , setUnVerified_users] = useState(null)
+    const redux_state = useSelector(state => state.Reducer)
+
 
     useEffect(()=>{
-        FarmerLogic.Get_farmers('False' , setUnVerified_users)
+        if (AppConstants.connected){
+            FarmerLogic.Get_farmers('False' , setUnVerified_users)
+        }else{
+            //Get data from redux state
+            let users = []
+            redux_state['retrieved_data']['farmers'].forEach(item => {
+                if (item['Active'] == "False"){
+                    users.push(item)
+                }
+            });
+            setUnVerified_users(users)
+
+        }
         
     },[])
 

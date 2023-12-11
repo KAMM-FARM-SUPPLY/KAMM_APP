@@ -14,15 +14,19 @@ export const Category = (props) => {
   const [Categories , setCategories] = useState(null)
 
   const dispatch = useDispatch()
+  const redux_state = useSelector(state => state.Reducer)
+
 
   useEffect(()=>{
-    dispatch({type : 'Loan_app_screen_key' , key : (props.navigation.getState()).routes[2].key})
-
-    Products.FetchProducts(setCategories)
+    if (AppConstants.connected){
+      Products.FetchProducts(setCategories)
+    }else{
+      //Getting data from the cache
+      setCategories(redux_state['retrieved_data']['Products'])
+    }
 
   },[])
 
-  const redux_state = useSelector(state => state.Reducer)
 
   if (Categories == null){
     return (

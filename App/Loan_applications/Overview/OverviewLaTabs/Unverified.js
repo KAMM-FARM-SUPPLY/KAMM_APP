@@ -7,12 +7,18 @@ import { Excel } from '../../../Helpers/Excel'
 import { LoanApplication } from '../../../Helpers/LoanApplication'
 import NumberFormat from 'react-number-format'
 import axios from 'axios'
+import AppConstants from '../../../Constants/AppConstants'
+import {useDispatch, useSelector} from 'react-redux'
 
 
 
 function Unverified(props) {
 
     const [Unverified_applications , setUnVerified_applications] = useState(null)
+
+    const dispatch = useDispatch()
+    const redux_state = useSelector(state => state.Reducer)
+
 
 
     const onSuccess = (applications) => {
@@ -25,7 +31,17 @@ function Unverified(props) {
     }
 
     useEffect(()=>{
-        LoanApplication.GetApplicationsStatus(null , 'False' , onSuccess , onError)
+        if (AppConstants.connected){
+            LoanApplication.GetApplicationsStatus(null , 'False' , onSuccess , onError)
+        }else{
+            let applications = []
+            redux_state['retrieved_data']['LoanApplications'].forEach(element => {
+                if (element['Active'] == "False"){
+                    applications.push(element)
+                }
+            });
+            setUnVerified_applications(applications)
+        }
         
     },[])
 

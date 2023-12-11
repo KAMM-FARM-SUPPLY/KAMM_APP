@@ -1,12 +1,24 @@
-import React , {useEffect} from 'react'
+import React , {useEffect } from 'react'
 import {View , Text , StyleSheet , ScrollView , FlatList , SafeAreaView , Image , BackHandler , ActivityIndicator} from 'react-native'
 import { ScreenHeight , ScreenWidth } from 'react-native-elements/dist/helpers'
 import {Avatar} from 'react-native-elements'
 import Separator from '../Components/Separator'
+import {useDispatch, useSelector} from 'react-redux'
+
 
 
 function FarmerProfile(props) {
+
+    const redux_state = useSelector(state => state.Reducer)
+
     const profile = props.route.params['Profile_info']
+    const partial = props.route.params['partial']
+    if (partial) {
+        profile = redux_state['registration']
+
+    }
+
+
     useEffect(()=>{
         const backAction = () => {
             props.navigation.navigate('Welcome')

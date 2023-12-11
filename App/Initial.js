@@ -10,8 +10,15 @@ import District from './Locations/District';
 import Stack from './Locations/Stack';
 import FarmerProfile from './FarmersRegistration/FarmerProfile';
 import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
+import AppConstants from './Constants/AppConstants';
+import { Sync } from './Helpers/Sync';
+import {useDispatch, useSelector} from 'react-redux'
+import Status from "./Components/AppStatus/Status";
+
 
 const Drawer = createDrawerNavigator();
+
+
 
 const CustomContent = (props) => (
 
@@ -35,12 +42,34 @@ const CustomContent = (props) => (
 
 )
 
+
 export function Initial(props) {
+  const dispatch = useDispatch()
+
+  const onsuccess = (data) => {
+    dispatch({type : 'Store_retrieved_data' , data : data})
+  }
+  
+  const onError = () => {
+    alert('An error occured with server . Please contact the admin for more clarificaton on this case')
+  }
+  
+
+  React.useEffect(()=>{
+    const SyncUpdate = setInterval(() => {
+      if(AppConstants.connected){
+        Sync.GET_SYNC(onsuccess , onError)
+      }
+    }, 20000);
+
+    return () => clearInterval(SyncUpdate);
+  },[])
   return (
-    <NavigationContainer>
+    <NavigationContainer independent = {true}>
       <Drawer.Navigator drawerContent={(props)=><CustomContent {...props}/>} initialRouteName="Farmers">
         <Drawer.Screen name="Farmers" component={Screen1_F} />
         <Drawer.Screen name="Manage Loans" component={Loan_Stack} />
+        <Drawer.Screen name="Application Status" component={Status} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

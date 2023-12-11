@@ -4,12 +4,24 @@ import { ScreenWidth } from 'react-native-elements/dist/helpers'
 import {useDispatch, useSelector} from 'react-redux'
 import Separator from '../Components/Separator'
 import { Location } from '../Helpers/Location'
+import AppConstants from '../Constants/AppConstants'
 
 function Subcounty(props) {
+    const redux_state = useSelector(state => state.Reducer)
+
 
   useEffect(()=>{
     // console.log(props.route.params['info'])
-    Location.Get_counties(setcounties , props.route.params['district_id'])
+    if (AppConstants.connected){
+        Location.Get_counties(setcounties , props.route.params['district_id'])
+    }else {
+        for(let i =0; i<redux_state['retrieved_data']['Locations'].length; i++){
+            if (redux_state['retrieved_data']['Locations'][i]['id'] == props.route.params['district_id']){
+                setcounties(redux_state['retrieved_data']['Locations'][i]['subcounties'])
+                
+            }
+        }
+    }
     
   },[])
 
@@ -17,7 +29,6 @@ function Subcounty(props) {
 
   //const {District : District , "Sub-county" : Sub_counties} = props.route.params['info']
 
-  const redux_state = useSelector(state => state.Reducer)
 //   console.log(redux_state)
 
   const dispatch = useDispatch()

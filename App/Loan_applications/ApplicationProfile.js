@@ -17,6 +17,7 @@ import Modal from "react-native-modal";
 // import { createOpenLink } from 'react-native-open-maps';
 import openMap from 'react-native-open-maps';
 
+
 function ApplicationProfile(props) {
 
   const [profile , setprofile] = useState(null)
@@ -32,33 +33,68 @@ function ApplicationProfile(props) {
   const [CollateralmodalVisible , setCollateralmodalVisible] = useState(false)
   const [activeCollateral , setactiveCollateral] = useState(null)
 
+  const dispatch = useDispatch()
+  const redux_state = useSelector(state => state.Reducer)
+
 
 
 
   const fetch_user_info = (url) => {
-    axios({
-      method : 'GET',
-      url : url,
-    }).then((Response)=>{
-      if (Response.status == 200){
-        setfarmer_info(Response.data)
-        setfarmer_info_loaded(true)
-      }
-    })
+
+    if (AppConstants.connected){
+
+        axios({
+          method : 'GET',
+          url : url,
+        }).then((Response)=>{
+          if (Response.status == 200){
+            setfarmer_info(Response.data)
+            setfarmer_info_loaded(true)
+          }
+        })
+
+    }else{
+
+      let id = url.slice(url.length-2 , url.length-1)
+      redux_state['retrieved_data']['farmers'].forEach(element => {
+        if(element['id'] == id){
+          setfarmer_info(element)
+          setfarmer_info_loaded(true)
+        }
+      });
+
+    }
+    
   }
 
 
   const fetch_product_info_current = (ids) => {
-    axios({
-      method : 'POST',
-      url : AppConstants.Debug ? (AppConstants.debug_url + '/getproducts_app') : (AppConstants.live_url + '/getproducts_app'),
-      data : {ids : ids}
-    }).then((Response)=>{
-      if (Response.status == 200){
-        setCurrent_products(Response.data)
-        setproduct_info_loaded(true)
-      }
-    })
+    if (AppConstants.connected){
+      axios({
+        method : 'POST',
+        url : AppConstants.Debug ? (AppConstants.debug_url + '/getproducts_app') : (AppConstants.live_url + '/getproducts_app'),
+        data : {ids : ids}
+      }).then((Response)=>{
+        if (Response.status == 200){
+          setCurrent_products(Response.data)
+          setproduct_info_loaded(true)
+        }
+      })
+    }else{
+      let product_information = []
+      redux_state['retrieved_data']['Products'].forEach(element => {
+        element['products'].forEach(item => {
+          if (ids.includes(item['id'])){
+            product_information.push(item)
+          }
+        });
+      })
+
+      setCurrent_products(product_information)
+      setproduct_info_loaded(true)
+
+    }
+    
   }
 
 

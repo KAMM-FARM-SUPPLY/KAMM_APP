@@ -6,14 +6,32 @@ import {useDispatch, useSelector} from 'react-redux'
 // import Farmer from '../Helpers/Farmer'
 import { FarmerLogic } from '../Helpers/Farmer'
 import { Location } from '../Helpers/Location'
+import AppConstants from '../Constants/AppConstants'
 
 
 
 function Village(props) {
 
+    const redux_state = useSelector(state => state.Reducer)
+
+
   useEffect(()=>{
     // console.log(props.route.params)
-    Location.Get_villages(setvillages , props.route.params['County_id'])
+    if (AppConstants.connected){
+        Location.Get_villages(setvillages , props.route.params['County_id'])
+
+    }else{
+        for(let i =0; i<redux_state['retrieved_data']['Locations'].length; i++){
+
+            for(let p=0; p<redux_state['retrieved_data']['Locations'][i]['subcounties'].length; p++){
+                if (redux_state['retrieved_data']['Locations'][i]['subcounties'][p]['id'] == props.route.params['County_id']){
+                    setvillages(redux_state['retrieved_data']['Locations'][i]['subcounties'][p]['villages'])
+                }
+            }
+            
+        }
+
+    }
   },[])
 
   const [villages , setvillages] = useState(null)

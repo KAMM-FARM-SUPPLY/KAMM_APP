@@ -10,8 +10,14 @@ export const Overview = (props) => {
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch({type : 'change_color'})
+    // let combined = {...redux_state['registration'] , ...redux_state['registration_pics']}
+    // console.log(combined)
+    //dispatch({type : 'Store_unsynced_profile' , data : 2 })
+
+
   },[])
   const redux_state = useSelector(state => state.Reducer)
+  //console.log({...redux_state['registration_pics'] , ...redux_state['registration']})
   return (
     <View style={styles.container}>
         <TouchableOpacity style = {styles.item} onPress={()=>{

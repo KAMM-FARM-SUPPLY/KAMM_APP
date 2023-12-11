@@ -8,6 +8,7 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import Farmer from '../../Helpers/FarmerRegistration';
 import FormData, {getHeaders} from 'form-data'
 
+import { checkInternetConnectivity } from '../../Constants/Connectivity';
 
 
 
@@ -20,9 +21,9 @@ function Signature(props) {
 
     const ref = useRef();
 
-    const handle_on_complete = (profile_info) => {
+    const handle_on_complete = (profile_info = null , partial = false) => {
       setRegistering(false)
-      props.navigation.navigate("Profile" , {'Profile_info' : profile_info})
+      props.navigation.navigate("Profile" , {'Profile_info' : profile_info , 'partial' : partial})
 
     }
 
@@ -44,14 +45,34 @@ function Signature(props) {
         // dispatch({type : 'Add_field' , key : 'Signature' , value : signature})
         // console.log(signature)
         setRegistering(true)
-        // Hit the apis
-        const form_data = new FormData()
-        form_data.append('back-side(NIN)' , redux_state['registration_pics']['back-side(NIN)'])
-        form_data.append('front-side(NIN)' , redux_state['registration_pics']['front-side(NIN)'])
-        form_data.append('Profile-photo' , redux_state['registration_pics']['Profile-photo'])
 
-        Farmer.Register({...redux_state['registration'] , 'Signature' : signature} , form_data , handle_on_complete,onError)
+        //Checking for internet connectivity
+        const connected = checkInternetConnectivity();
 
+
+        if (!connected){
+
+          // Hit the apis
+          const form_data = new FormData()
+          form_data.append('back-side(NIN)' , redux_state['registration_pics']['back-side(NIN)'])
+          form_data.append('front-side(NIN)' , redux_state['registration_pics']['front-side(NIN)'])
+          form_data.append('Profile-photo' , redux_state['registration_pics']['Profile-photo'])
+
+          Farmer.Register({...redux_state['registration'] , 'Signature' : signature} , form_data , handle_on_complete,onError)
+
+
+        }else {
+
+          dispatch({type : 'Store_unsynced_profile' , value : {...redux_state['registration'] , ...redux_state['registration_pics']}})
+
+
+          setTimeout(()=>{
+            handle_on_complete(partial = true)
+          },1000)
+
+        }
+
+        
       }
         
     };

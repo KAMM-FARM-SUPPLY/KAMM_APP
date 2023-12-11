@@ -1,15 +1,22 @@
 import axios from "axios";  
 import AppConstants from "../Constants/AppConstants";
 
+
+
+
 export class Location{
+    
+
     static async Get_districts(onComplete){
-        axios({
-            method : 'GET',
-            url : AppConstants.Debug ?  (AppConstants.debug_url + '/Districts/') : (AppConstants.live_url + '/Districts/'),
-            data : []
-        }).then((Result)=>{
-            onComplete(Result.data)
-        })
+            axios({
+                method : 'GET',
+                url : AppConstants.Debug ?  (AppConstants.debug_url + '/Districts/') : (AppConstants.live_url + '/Districts/'),
+                data : []
+            }).then((Result)=>{
+                onComplete(Result.data)
+            })
+    
+        
     }
 
     static async Get_counties(onComplete , district_id){

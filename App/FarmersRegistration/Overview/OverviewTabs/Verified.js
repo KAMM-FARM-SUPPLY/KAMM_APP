@@ -4,14 +4,31 @@ import {Avatar} from 'react-native-elements'
 import { ScreenHeight , ScreenWidth } from 'react-native-elements/dist/helpers'
 import FarmerLogic from '../../../Helpers/Farmer'
 import { Excel } from '../../../Helpers/Excel'
+import {useDispatch, useSelector} from 'react-redux'
+import AppConstants from '../../../Constants/AppConstants'
 
 
 function Verified(props) {
 
     const [verified_users , setVerified_users] = useState(null)
+    const redux_state = useSelector(state => state.Reducer)
+
 
     useEffect(()=>{
-        FarmerLogic.Get_farmers('True' , setVerified_users)
+        if (AppConstants.connected){
+            FarmerLogic.Get_farmers('True' , setVerified_users)
+        }else{
+             //Get data from redux state
+
+             let users = []
+             redux_state['retrieved_data']['farmers'].forEach(element => {
+                if (element['Active'] == "True"){
+                    users.push(element) 
+                }
+            });
+            setVerified_users(users)
+
+        }
         
     },[])
 

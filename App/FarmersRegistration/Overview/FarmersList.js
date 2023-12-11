@@ -5,16 +5,32 @@ import Separator from '../../Components/Separator'
 import {useDispatch, useSelector} from 'react-redux'
 import { FarmerLogic } from '../../Helpers/Farmer'
 import { ScreenWidth , ScreenHeight } from 'react-native-elements/dist/helpers'
+import AppConstants from '../../Constants/AppConstants'
+
 
 function FarmersList(props) {
     const [Farmers , setFarmers] = useState(null)
-    useEffect(()=>{
 
-        FarmerLogic.get_farmer_village_list(props.route.params['name'] , setFarmers)
+    const dispatch = useDispatch()
+    const redux_state = useSelector(state => state.Reducer)
+
+
+    useEffect(()=>{
+        if (AppConstants.connected){
+            FarmerLogic.get_farmer_village_list(props.route.params['name'] , setFarmers)
+        }else{
+            let farmer_list = []
+            redux_state['retrieved_data']['farmers'].forEach(element => {
+                if(element['Village'] == props.route.params['name']){
+                    farmer_list.push(element)
+                }
+            });
+            setFarmers(farmer_list)
+            
+        }
         
     },[])
 
-    const dispatch = useDispatch()
 
     if (Farmers == null){
         return (
