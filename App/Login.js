@@ -71,7 +71,7 @@ export default function Login(props) {
                 <Button style = {{backgroundColor : 'red'}} onPress = {()=>{
                         setlogging_text('Logging in . Please wait ...')
                         setlogging_in(true)
-                        if (!AppConstants.connected){
+                        if (AppConstants.connected){
                             Administrative.Login(username , password , ()=>{
                                 setlogging_in(false)
                                 setlogging_text("Welcome back . " + username)

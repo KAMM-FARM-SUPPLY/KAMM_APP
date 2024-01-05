@@ -113,11 +113,11 @@ function ApplicationProfile(props) {
 
     fetch_user_info(props.route.params['Profile_info'].farmer)
 
-    var ids = []
-    for(let i =0; i <props.route.params['Profile_info'].Products.length; i++){
-      ids.push(props.route.params['Profile_info'].Products[i].product)
-    }
-    fetch_product_info_current(ids)
+    // var ids = []
+    // for(let i =0; i <props.route.params['Profile_info'].Products.length; i++){
+    //   ids.push(props.route.params['Profile_info'].Products[i].product)
+    // }
+    // fetch_product_info_current(ids)
 
 
     if (props.route.params['registration']){
@@ -137,7 +137,7 @@ function ApplicationProfile(props) {
   },[])
 
 
-  if (!farmer_info_loaded || !product_info_loaded){
+  if (!farmer_info_loaded){
     return (
       <View style = {styles.Indicator}>
           <ActivityIndicator/>
@@ -215,12 +215,12 @@ function ApplicationProfile(props) {
             /> */}
   
             {
-              profile.Products.map((item ,index , arr)=>{
-                let product_info = getproduct_info(item.product)
+              props.route.params['Profile_info'].Products.map((item ,index , arr)=>{
+                // let product_info = getproduct_info(item.product)
                 //console.log(product_info)
                 return(
                 <View style = {styles.LoanItem}>
-                    <Text>{product_info['name'].length >= 7?product_info['name'].slice(0,6) + '...' : product_info['name']}</Text>
+                    <Text>{item.product['name'].length >= 7?item.product['name'].slice(0,6) + '...' : item.product['name']}</Text>
                     <Text>{item.quantity} x shs. {item.rate}</Text>
                    
                     <NumberFormat value = { (item.quantity * item.rate) } displayType = {'text'}

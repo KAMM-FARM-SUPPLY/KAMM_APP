@@ -9,6 +9,7 @@ import Farmer from '../../Helpers/FarmerRegistration';
 import FormData, {getHeaders} from 'form-data'
 
 import { checkInternetConnectivity } from '../../Constants/Connectivity';
+import AppConstants from '../../Constants/AppConstants';
 
 
 
@@ -47,10 +48,10 @@ function Signature(props) {
         setRegistering(true)
 
         //Checking for internet connectivity
-        const connected = checkInternetConnectivity();
+        const connected = AppConstants.connected;
 
 
-        if (!connected){
+        if (connected){
 
           // Hit the apis
           const form_data = new FormData()
