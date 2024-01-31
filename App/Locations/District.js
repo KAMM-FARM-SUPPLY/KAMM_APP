@@ -6,6 +6,9 @@ import Separator from '../Components/Separator'
 import { Location } from '../Helpers/Location'
 import AppConstants from '../Constants/AppConstants'
 
+import { RFValue } from 'react-native-responsive-fontsize';
+
+
 
 function District(props) {
     const [districts , setdistricts] = useState(null)
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
         
     },
     district : {
-        fontSize : 16,
+        fontSize: RFValue(16), // Use responsive font size
         fontWeight : 'bold',
     },
     comp : {

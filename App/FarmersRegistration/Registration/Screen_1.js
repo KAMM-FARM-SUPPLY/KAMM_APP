@@ -13,6 +13,9 @@ import DropDown from "react-native-paper-dropdown";
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-picker/picker';
 
+import { RFValue } from 'react-native-responsive-fontsize';
+
+
 function Screen_1(props) {
 
     const [Surname , setSurname] = useState('')
@@ -181,7 +184,7 @@ function Screen_1(props) {
         <View style = {styles.info}>
 
             <View style = {styles.input}>
-                <Text>Surname *</Text>
+                <Text style = {styles.fields}>Surname *</Text>
                 <TextInput
                     autoCapitalize='words'
                     placeholder='Enter your surname'
@@ -195,7 +198,7 @@ function Screen_1(props) {
             </View>
 
             <View style = {styles.input}>
-                <Text>Given Name *</Text>
+                <Text style = {styles.fields}>Given Name *</Text>
                 <TextInput
                     placeholder='Enter given names'
                     autoCapitalize='words'
@@ -208,7 +211,7 @@ function Screen_1(props) {
             </View>
 
             <View style = {styles.input}>
-                <Text>Select Marital Status *</Text>
+                <Text style = {styles.fields}>Select Marital Status *</Text>
                 
                 <Picker
                     style = {{width : 0.95 * ScreenWidth}}
@@ -230,7 +233,7 @@ function Screen_1(props) {
             {
                     (redux_state['Farmer_info_visit'] ? (
                         <View style = {styles.input}>
-                            <Text>Phone Contact *</Text>
+                            <Text style = {styles.fields}>Phone Contact *</Text>
                             <TextInput
                                 placeholder='Enter the new contact if any with +256...'
                                 autoCapitalize='words'
@@ -245,7 +248,7 @@ function Screen_1(props) {
                     ) : (
                         <View style = {{...styles.input , height : 0.14 * ScreenHeight}}>
                             <View style = {styles.error}>
-                                <Text>Telephone number *</Text>
+                                <Text style = {styles.fields}>Telephone number *</Text>
                                 {(valid)?(
                                     <View style = {styles.validate_icon}>
                                         <Avatar rounded containerStyle = {{ backgroundColor : 'green' , elevation :10  }} size = {'small'} icon = {{  name : 'check' , color : 'white', type : 'font-awesome' , size : 16 }}  />
@@ -286,7 +289,7 @@ function Screen_1(props) {
               
             
             <View style = {styles.input}>
-                <Text>Date of birth *</Text>
+                <Text style = {styles.fields}>Date of birth *</Text>
                 <TextInput
                     placeholder='Tap to select date'
                     autoCapitalize='words'
@@ -301,7 +304,7 @@ function Screen_1(props) {
             </View>
 
             <View style = {styles.input}>
-                <Text>Select Gender *</Text>
+                <Text style = {styles.fields}>Select Gender *</Text>
                 
                 <Picker
                     style = {{width : 0.95 * ScreenWidth}}
@@ -318,7 +321,7 @@ function Screen_1(props) {
             
 
             <View style = {styles.input}>
-                <Text>Coffee coverage *</Text>
+                <Text style = {styles.fields}>Coffee coverage *</Text>
                 <TextInput
                     placeholder='Enter the coffee coverage'
                     autoCapitalize='words'
@@ -326,13 +329,13 @@ function Screen_1(props) {
                     onChangeText={(text)=>{
                         setCoffee_coverage(text)
                     }}
-                    value = {Ov_coffee_prod}
+                    value = {Coffee_coverage}
 
                 />
             </View>
 
             <View style = {styles.input}>
-                <Text>Overall Coffee production *</Text>
+                <Text style = {styles.fields}>Overall Coffee production *</Text>
                 <TextInput
                     placeholder='Enter the coffee production'
                     value = {Ov_coffee_prod}
@@ -345,7 +348,7 @@ function Screen_1(props) {
             </View>
 
             <View style = {styles.input}>
-                <Text>Total Land coverage *</Text>
+                <Text style = {styles.fields}>Total Land coverage *</Text>
                 <TextInput
                     placeholder='Total Land coverage'
                     value = {Total_land_acreage}
@@ -358,7 +361,7 @@ function Screen_1(props) {
             </View>
 
             <View style = {styles.input}>
-                <Text>Number of trees *</Text>
+                <Text style = {styles.fields}>Number of trees *</Text>
                 <TextInput
                     placeholder='Enter the number of coffee plants'
                     autoCapitalize='words'
@@ -371,7 +374,7 @@ function Screen_1(props) {
             </View>
             
             <View style = {styles.input}>
-                <Text>Unproductive Trees *</Text>
+                <Text style = {styles.fields}>Unproductive Trees *</Text>
                 <TextInput
                     placeholder='Enter the number of unproductive trees'
                     autoCapitalize='words'
@@ -387,7 +390,7 @@ function Screen_1(props) {
 
             <View style = {styles.input}>
                 <View style = {styles.error}>
-                    <Text>NIN number * </Text>
+                    <Text style = {styles.fields}>NIN number * </Text>
                     {(NIN_char == 14 || NIN_char == 0)?(
                         <View style = {styles.validate_icon}>
                             {(NIN.length > 0) ? (
@@ -499,8 +502,8 @@ const styles = StyleSheet.create({
         width : 0.9 * ScreenWidth,
         margin: 12,
         borderBottomWidth : 1,
-        fontWeight : 'bold',
-
+        //fontWeight : 'bold',
+        fontSize : RFValue(14)
         // borderWidth: 1,
         // padding: 5,
 
@@ -542,6 +545,10 @@ const styles = StyleSheet.create({
             flexDirection : 'row',
             justifyContent : 'space-around',
             alignItems : 'center',
+        },
+        fields : {
+            fontSize : RFValue(15),
+            fontWeight : 'bold'
         }
 
 })

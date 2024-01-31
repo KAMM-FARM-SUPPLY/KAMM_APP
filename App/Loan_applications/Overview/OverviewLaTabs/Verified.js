@@ -15,6 +15,7 @@ function Verified(props) {
     const [Verified_applications , setVerified_applications] = useState(null)
 
     const onSuccess = (applications) => {
+        //console.log(applications)
         setVerified_applications(applications)
     }
 
@@ -27,7 +28,7 @@ function Verified(props) {
 
     useEffect(()=>{
         if (AppConstants.connected){
-            LoanApplication.GetApplicationsStatus(null , 'True' , onSuccess , onError)
+            LoanApplication.GetApplicationsStatus(null , 'Approved' , onSuccess , onError)
         }else{
             let applications = []
             redux_state['retrieved_data']['LoanApplications'].forEach(element => {
@@ -66,9 +67,10 @@ function Verified(props) {
         
                 <View style = {styles.listContainer}>
                     <FlatList
-                        data = {Verified_applications}
+                        data = {Verified_applications['items']}
                         renderItem={({item , index})=> {
                             //ongetfarmer_info(index , item.farmer)
+                            console.log("test " + item.Name)
                             return(
                                 <TouchableOpacity style = {styles.item} onPress = {()=>{props.navigation.navigate("Loan Application" , {'Profile_info' : item})}} >
                                     <View style = {styles.thumbnail}>
@@ -82,11 +84,11 @@ function Verified(props) {
                                             {/* <Text style = {styles.Name_txt}>{(Farmer_info[index])?('Loading ...') : (console.log(Farmer_info))}</Text> */}
                                             <Text style = {styles.Name_txt}>{item.Name + ' ' + item.Given_name}</Text>
 
-                                            <NumberFormat value = { item.Total_cost } displayType = {'text'}
+                                            {/* <NumberFormat value = { item.Total_cost } displayType = {'text'}
                                                 thousandSeparator = {true}
                                                 prefix = {'shs.'}
                                                 renderText={value => <Text style = {{fontWeight : 'bold'}}>Amount: {value}</Text>}
-                                            />
+                                            /> */}
                                             <Text> Date created : {new Date(item.Date_added).toLocaleDateString()}</Text>
                                         </View>
                                     </View>

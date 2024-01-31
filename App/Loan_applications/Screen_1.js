@@ -6,6 +6,10 @@ import {Avatar} from 'react-native-elements'
 import { connect } from 'react-redux'
 import { Icon } from 'react-native-elements'
 
+
+import { useDimensions } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+
 function Screen_1({navigation}) {
     useEffect(()=>{
     },[])
@@ -49,31 +53,26 @@ function Screen_1({navigation}) {
 export default Screen_1
 
 const styles = StyleSheet.create({
-  container : {
+  container: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    width: ScreenWidth,
     paddingHorizontal: 0.08 * ScreenHeight,
-    paddingTop : 30,
+    paddingTop: 30,
     justifyContent: "space-between",
-
   },
-  item : {
-    height : ScreenHeight * 0.25,
-    //width : ScreenWidth * 0.3,
-    // backgroundColor : 'red',
-    borderRadius : 10,
-    elevation : 5,
-    flexDirection : 'column',
-    justifyContent : 'space-around',
-    alignItems : 'center',
-    flexBasis : '48%'
-
-    
+  item: {
+    height: ScreenHeight * 0.25,
+    borderRadius: 10,
+    elevation: 5,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexBasis: '48%',
+    flexShrink: 1,
   },
-  panelText : {
-    fontSize : 13,
-    fontWeight : 'bold'
-  } 
-})
+  panelText: {
+    fontSize: RFValue(13), // Use responsive font size
+    fontWeight: 'bold',
+  },
+});

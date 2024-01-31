@@ -68,7 +68,7 @@ function Signature(props) {
 
 
           setTimeout(()=>{
-            handle_on_complete(partial = true)
+              handle_on_complete({...redux_state['registration'] , ...redux_state['registration_pics']} , partial = true)
           },1000)
 
         }

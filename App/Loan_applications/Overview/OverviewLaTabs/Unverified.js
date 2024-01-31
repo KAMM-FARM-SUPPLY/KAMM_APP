@@ -32,7 +32,7 @@ function Unverified(props) {
 
     useEffect(()=>{
         if (AppConstants.connected){
-            LoanApplication.GetApplicationsStatus(null , 'False' , onSuccess , onError)
+            LoanApplication.GetApplicationsStatus(null , 'Pending' , onSuccess , onError)
         }else{
             let applications = []
             redux_state['retrieved_data']['LoanApplications'].forEach(element => {
@@ -77,7 +77,7 @@ function Unverified(props) {
         
                 <View style = {styles.listContainer}>
                     <FlatList
-                        data = {Unverified_applications}
+                        data = {Unverified_applications['items']}
                         renderItem={({item , index})=> {
                             //ongetfarmer_info(index , item.farmer)
                             return(

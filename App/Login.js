@@ -13,6 +13,8 @@ import AppConstants from './Constants/AppConstants.js';
 import { Administrative } from './Helpers/administrative.js';
 import Spinner from 'react-native-loading-spinner-overlay'
 
+import { RFValue } from 'react-native-responsive-fontsize';
+
 // Keep the splash screen visible while we fetch resources
 
 export default function Login(props) {
@@ -50,7 +52,7 @@ export default function Login(props) {
                         placeholder='Enter your username'
                         style={styles.input_control}
                         onChangeText={(text)=>{
-                            setusername(text)
+                            setusername(text.trim())
                         }}
                         value={username}
                 />
@@ -61,7 +63,7 @@ export default function Login(props) {
                     placeholder='Enter your password'
                     style={styles.input_control}
                     onChangeText={(text)=>{
-                        setpassword(text)
+                        setpassword(text.trim())
                     }}
                     value={password}
                 />
@@ -69,9 +71,11 @@ export default function Login(props) {
 
             <View style = {styles.button}>
                 <Button style = {{backgroundColor : 'red'}} onPress = {()=>{
-                        setlogging_text('Logging in . Please wait ...')
-                        setlogging_in(true)
-                        if (AppConstants.connected){
+                        
+                        if (!AppConstants.connected){
+                            setlogging_text('Logging in . Please wait ...')
+                            setlogging_in(true)
+
                             Administrative.Login(username , password , ()=>{
                                 setlogging_in(false)
                                 setlogging_text("Welcome back . " + username)
@@ -117,11 +121,11 @@ const styles = StyleSheet.create({
     heading : {
         fontFamily: FontFamily.interRegular,
         color: Color.colorBlack,
-        fontSize: FontSize.size_5xl,
+        fontSize: RFValue(FontSize.size_5xl),
     },
     subheading : {
         fontFamily: FontFamily.interRegular,
-        fontSize : FontSize.size_mini
+        fontSize : RFValue(FontSize.size_mini)
     },
     headings : {
         width : ScreenWidth,
@@ -136,11 +140,11 @@ const styles = StyleSheet.create({
         alignItems : 'center'
     },
     input_control: {
-        height: 20,
+        // height: 20,
         width : 0.9 * ScreenWidth,
-        margin: 12,
+        // margin: 12,
         borderBottomWidth : 1,
-        fontWeight : 'bold',
+        // fontWeight : 'bold',
     },
     button : {
         width : 0.7 * ScreenWidth,

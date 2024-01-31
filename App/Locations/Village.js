@@ -8,6 +8,8 @@ import { FarmerLogic } from '../Helpers/Farmer'
 import { Location } from '../Helpers/Location'
 import AppConstants from '../Constants/AppConstants'
 
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 
 function Village(props) {
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
         
     },
     district : {
-        fontSize : 16,
+        fontSize : RFValue(16),
         fontWeight : 'bold',
     },
     comp : {

@@ -140,7 +140,7 @@ export default Reducer = (state = {
                 ...state,
                 unsynced_profile_data : [
                     ...state.unsynced_profile_data,
-                    action.data
+                    action.value
                 ]
             }
         }

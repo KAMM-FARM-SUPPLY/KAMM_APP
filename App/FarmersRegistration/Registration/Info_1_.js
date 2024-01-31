@@ -10,6 +10,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import PhoneInput from "react-native-phone-number-input";
 // import DateTimePicker from '@react-native-community/datetimepicker';
 
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 function Info_1_(props) {
 
@@ -56,7 +58,7 @@ function Info_1_(props) {
             <View style = {styles.info}>
 
                 <View style = {styles.input}>
-                    <Text>Surname *</Text>
+                    <Text style = {styles.fields}>Surname </Text>
                     <TextInput
                         autoCapitalize='words'
                         placeholder='Enter your surname'
@@ -182,5 +184,10 @@ const styles = new StyleSheet.create({
         // backgroundColor : 'red'
 
     },
+
+    fields : {
+        fontSize : RFValue(15),
+        fontWeight : 'bold'
+    }
 
 })

@@ -9,6 +9,9 @@ import {useDispatch, useSelector} from 'react-redux'
 // import { Image as Compressor } from 'react-native-compressor';
 
 
+import { RFValue } from 'react-native-responsive-fontsize';
+
+
 function NIN_Photos(props) {
     const [front_side , setfront_side] = useState(null)
     const [back_side , setback_side] = useState(null)

@@ -5,6 +5,7 @@ import {Avatar} from 'react-native-elements'
 import Separator from '../Components/Separator'
 import {useDispatch, useSelector} from 'react-redux'
 
+import { RFValue } from 'react-native-responsive-fontsize';
 
 
 function FarmerProfile(props) {
@@ -13,10 +14,10 @@ function FarmerProfile(props) {
 
     const profile = props.route.params['Profile_info']
     const partial = props.route.params['partial']
-    if (partial) {
-        profile = redux_state['registration']
+    // if (partial) {
+    //     profile = redux_state['registration']
 
-    }
+    // }
 
 
     useEffect(()=>{
@@ -40,7 +41,7 @@ function FarmerProfile(props) {
                 <View style={styles.profile_pic}>
                     {
                         profile ? (
-                            <Avatar rounded source = {{ uri : profile.Profile_picture }} size = {'xlarge'}  />
+                            <Avatar rounded source = {{ uri : partial ? (profile['Profile-photo'].uri) : (profile.Profile_picture) }} size = {'xlarge'}  />
                         ) : (
                             <Avatar rounded containerStyle = {{ backgroundColor : 'rgba(0,0,0,0.7)' }} icon = {{  name : 'user' , type : 'font-awesome' }} size = {'xlarge'}  />
                         )
@@ -61,8 +62,8 @@ function FarmerProfile(props) {
             </View>
             <View style={styles.NIN_photos}>
                 <Text style = {styles.headers}>National ID</Text>
-                <Image source = {{uri : profile.Front_side_id}} style = {styles.NIN_pic} />
-                <Image source = {{uri : profile.Hind_side_id}} style = {styles.NIN_pic} />
+                <Image source = {{uri : partial ? (profile['front-side(NIN)'].uri) : (profile.Front_side_id)}} style = {styles.NIN_pic} />
+                <Image source = {{uri : partial ? (profile['back-side(NIN)'].uri) : (profile.Hind_side_id)}} style = {styles.NIN_pic} />
 
             </View>
 
@@ -70,24 +71,24 @@ function FarmerProfile(props) {
                 <Text style = {styles.headers}>Farm information</Text>
 
                 <View style = {styles.farm_info_list}>
-                    <Text>Total land acreage</Text>
-                    <Text>{profile.Total_land_acreage}</Text>
+                    <Text style = {styles.farm}>Total land acreage</Text>
+                    <Text style = {styles.farm}>{profile.Total_land_acreage}</Text>
                 </View>
                 <View style = {styles.farm_info_list}>
-                    <Text>Coffee acreage</Text>
-                    <Text>{profile.Coffee_acreage}</Text>
+                    <Text style = {styles.farm}>Coffee acreage</Text>
+                    <Text style = {styles.farm}>{profile.Coffee_acreage}</Text>
                 </View>
                 <View style = {styles.farm_info_list}>
-                    <Text>Number of trees</Text>
-                    <Text>{profile.No_of_trees}</Text>
+                    <Text style = {styles.farm}>Number of trees</Text>
+                    <Text style = {styles.farm}>{profile.No_of_trees}</Text>
                 </View>
                 <View style = {styles.farm_info_list}>
-                    <Text>Unproductive trees</Text>
-                    <Text>{profile.Unproductive_trees}</Text>
+                    <Text style = {styles.farm}>Unproductive trees</Text>
+                    <Text style = {styles.farm}>{profile.Unproductive_trees}</Text>
                 </View>
                 <View style = {styles.farm_info_list}>
-                    <Text>Coffee production</Text>
-                    <Text>{profile.Ov_coffee_prod}</Text>
+                    <Text style = {styles.farm}>Coffee production</Text>
+                    <Text style = {styles.farm}>{profile.Ov_coffee_prod}</Text>
                 </View>
 
 
@@ -134,9 +135,14 @@ const styles = StyleSheet.create({
         alignItems : 'flex-start',
     },
     text_info : {
-        fontSize : 15,
+        fontSize : RFValue(16),
         fontWeight : 'bold',
     } ,
+
+    farm : {
+        fontSize : RFValue(15)
+    },
+
     NIN_photos : {
         height : 0.7 * ScreenHeight,
         width : 0.95 * ScreenWidth,
@@ -149,7 +155,7 @@ const styles = StyleSheet.create({
 
     },
     headers : {
-        fontSize : 13,
+        fontSize : RFValue(20),
         fontWeight : 'bold',
     },
     NIN_pic : {

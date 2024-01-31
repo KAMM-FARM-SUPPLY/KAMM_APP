@@ -13,10 +13,10 @@ export class FarmerLogic{
         })
     } 
     
-    static async Get_farmers(verified , setFarmers){
+    static async Get_farmers(verified , setFarmers , page){
         axios({
             method : 'GET',
-            url : AppConstants.Debug ?  (AppConstants.debug_url + '/GetFarmers/?verified=' + verified) : (AppConstants.live_url + '/GetFarmers/?verified=' + verified),
+            url : AppConstants.Debug ?  (AppConstants.debug_url + '/GetFarmers/?status=' + verified + "&page=" + page) : (AppConstants.live_url + '/GetFarmers/?status=' + verified + "&page=" + page),
             data : []
         }).then((Response)=>{
             setFarmers(Response.data)

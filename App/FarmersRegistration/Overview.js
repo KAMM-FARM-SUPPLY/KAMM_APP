@@ -6,17 +6,22 @@ import {Avatar} from 'react-native-elements'
 import { connect } from 'react-redux'
 import { Icon } from 'react-native-elements'
 
+import { useDimensions } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+
+
 export const Overview = (props) => {
   const dispatch = useDispatch()
   useEffect(()=>{
-    dispatch({type : 'change_color'})
+    //dispatch({type : 'change_color'})
     // let combined = {...redux_state['registration'] , ...redux_state['registration_pics']}
     // console.log(combined)
     //dispatch({type : 'Store_unsynced_profile' , data : 2 })
 
-
   },[])
   const redux_state = useSelector(state => state.Reducer)
+  console.log(redux_state['unsynced_profile_data'])
+
   //console.log({...redux_state['registration_pics'] , ...redux_state['registration']})
   return (
     <View style={styles.container}>
@@ -53,31 +58,30 @@ export const Overview = (props) => {
 
 export default Overview
 
+
+//const { width: screenWidth } = useDimensions(); // Get screen width
+
 const styles = StyleSheet.create({
-  container : {
+  container: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    width: ScreenWidth,
     paddingHorizontal: 0.08 * ScreenHeight,
-    paddingTop : 30,
+    paddingTop: 30,
     justifyContent: "space-between",
-    
   },
-  item : {
-    height : ScreenHeight * 0.25,
-    //width : ScreenWidth * 0.3,
-    borderRadius : 10,
-    elevation : 5,
-
-    flexDirection : 'column',
-    justifyContent : 'space-around',
-    alignItems : 'center',
-    flexBasis : '48%'
-    
+  item: {
+    height: ScreenHeight * 0.25,
+    borderRadius: 10,
+    elevation: 5,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexBasis: '48%',
+    flexShrink: 1,
   },
-  panelText : {
-    fontSize : 13,
-    fontWeight : 'bold'
-  }
-})
+  panelText: {
+    fontSize: RFValue(13), // Use responsive font size
+    fontWeight: 'bold',
+  },
+});
