@@ -59,7 +59,7 @@ function FarmersList(props) {
                                 data = {Farmers}
                                 horizontal = {false}
                                 renderItem={(Profile , index)=>(
-                                    <TouchableOpacity  disabled = {(Profile.item.Active == 'True')?(false) : (true)} onPress = {()=>{
+                                    <TouchableOpacity  disabled = {!Profile.item.Active} onPress = {()=>{
                                         if(props.route.params['LoanApplications']){
                                             dispatch({type : 'Loan_identity' , Loan_id : Profile.item.id})
                                             props.navigation.navigate('Application' , {'Profile_info' : Profile.item})
@@ -67,7 +67,7 @@ function FarmersList(props) {
                                             props.navigation.navigate('Profile' , {'Profile_info' : Profile.item})
                                         }
                                         
-                                    }} style = {{...styles.comp , opacity : (Profile.item.Active ==='True')?(1) : (0.3)}}>
+                                    }} style = {{...styles.comp , opacity : (Profile.item.Active)?(1) : (0.3)}}>
                                         <View style = {styles.Farmer_item}>
                                             <View style = {{width : 70 }}>
                                                 <Avatar rounded source = {{ uri : Profile.item.Profile_picture }} size = {'medium'}  />

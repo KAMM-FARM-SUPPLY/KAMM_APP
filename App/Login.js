@@ -72,7 +72,7 @@ export default function Login(props) {
             <View style = {styles.button}>
                 <Button style = {{backgroundColor : 'red'}} onPress = {()=>{
                         
-                        if (!AppConstants.connected){
+                        if (AppConstants.connected){
                             setlogging_text('Logging in . Please wait ...')
                             setlogging_in(true)
 

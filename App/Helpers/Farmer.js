@@ -13,15 +13,30 @@ export class FarmerLogic{
         })
     } 
     
-    static async Get_farmers(verified , setFarmers , page){
+    static async Get_farmers(verified , setFarmers , page , name = null){
+
+        if (name == ""){
+            name = null
+        }
+        
         axios({
-            method : 'GET',
-            url : AppConstants.Debug ?  (AppConstants.debug_url + '/GetFarmers/?status=' + verified + "&page=" + page) : (AppConstants.live_url + '/GetFarmers/?status=' + verified + "&page=" + page),
-            data : []
-        }).then((Response)=>{
-            setFarmers(Response.data)
-            console.log(Response.data)
+        method: 'GET',
+        url: AppConstants.Debug ?
+            (AppConstants.debug_url + '/GetFarmers/') :
+            (AppConstants.live_url + '/GetFarmers/'),
+        params: {
+            'status': verified,
+            'page': page,
+            'name_search': name,
+        },
         })
+        .then((Response) => {
+            setFarmers(Response.data);
+        })
+        .catch((error) => {
+            // Handle errors
+            console.error('Error:', error);
+        });
     }
 
 }

@@ -8,6 +8,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import { FarmerVisits} from '../../../Helpers/Visits';
 import axios from 'axios';
 import Spinner from 'react-native-loading-spinner-overlay'
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 
 function Scheduled(props) {
@@ -21,12 +23,17 @@ function Scheduled(props) {
     var date1 = new Date(scheduled_date).getTime()
     var date2 = Date.now()
     var hours = Math.floor(Math.abs(date1 - date2) / 36e5);
-    return hours
+
+    if (date2 > date1){
+      return {'hours' : hours , 'validity' : false}
+    }
+
+    return {'hours' : hours , 'validity' : true}
   }
 
 
   useEffect(()=>{
-    FarmerVisits.Get_Visits(set_scheduled_visits , ()=>{alert('Something is wrong')});
+    FarmerVisits.Get_Visits(false , 2 ,set_scheduled_visits , ()=>{alert('Something is wrong')});
   },[])
 
   if (scheduled_visits == null){
@@ -58,29 +65,30 @@ function Scheduled(props) {
             ItemSeparatorComponent={()=><Separator/>}
             contentContainerStyle = {{paddingTop : 15}}
             renderItem={({item})=>(
-              <TouchableOpacity  onPress = {()=>{
+              <TouchableOpacity disabled = {!Get_hrs_difference(item.scheduled_date).validity}  onPress = {()=>{
                 // FarmerVisits.get_farmer_info(3 , (response)=>{
                 //   dispatch({type : 'Farmer_info_visit' , key : 'farmer profile' , value : response})
                 // })
                 setRegistering(true)
-                axios.get(item.Farmer_id).then((resp)=>{dispatch({type : 'Farmer_info_visit' , key : 'farmer profile' , value : resp.data})})
+                dispatch({type : 'Farmer_info_visit' , key : 'farmer profile' , value : item.Farmer_id})
+
                 setTimeout(()=>{
                   setRegistering(false)
                   props.navigation.navigate('Basic Info' )
                 },500)
 
-              }} style = {styles.option}>
+              }} style = {{...styles.option , opacity : Get_hrs_difference(item.scheduled_date).validity ? (1) : (0.3) }}>
                   <View style = {styles.pic_description}> 
-                    <Avatar rounded icon = {{ name : 'clock-o' , size : 25 , color : 'green' , type: 'font-awesome' }} />
+                    <Avatar rounded icon = {{ name : Get_hrs_difference(item.scheduled_date).validity ? ('clock-o') : ('user-times') , size : 25 , color : 'green' , type: 'font-awesome' }} />
                     <View style = {styles.name_info}>
-                        <Text style = {{ fontWeight : 'bold' }}>{item.farmer_info.Name + " " + item.farmer_info.Given_name}</Text>
-                        <Text>Scheduled Date : {new Date(item.scheduled_date).toLocaleDateString()}</Text>
+                        <Text style = {{ fontWeight : 'bold' , fontSize : RFValue(15) }}>{item.Farmer_id.Name + " " + item.Farmer_id.Given_name}</Text>
+                        <Text style = {{fontSize : RFValue(13)}}>Scheduled Date : {new Date(item.scheduled_date).toLocaleDateString()}</Text>
                     </View>
                   </View>
 
                   <View style = {styles.prefix}>
-                      <Avatar rounded icon = {{ name : 'clock-o' , size : 25 , color : 'red' , type: 'font-awesome' }} />
-                      <Text>{Get_hrs_difference(item.scheduled_date)} hrs</Text>
+                      <Avatar rounded icon = {{ name : 'clock-o' , size : 20 , color : 'red' , type: 'font-awesome' }} />
+                      <Text style = {{fontSize : RFValue(13)}}>{Get_hrs_difference(item.scheduled_date).hours} hrs </Text>
                   </View>
               </TouchableOpacity>
             )}
@@ -112,7 +120,7 @@ const styles = StyleSheet.create({
       alignItems : 'center'
   },
   heading_txt : {
-    fontSize : 17,
+    fontSize : RFValue(18),
     fontWeight : 'bold',
   },
   pic_description : {

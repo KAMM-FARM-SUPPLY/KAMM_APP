@@ -17,25 +17,19 @@ export class FarmerVisits{
         })
     }
 
-    static async Get_Visits(onSuccess , onError){
+    static async Get_Visits(status , employee_id ,onSuccess , onError){
         axios({
             method : 'GET',
             url : AppConstants.Debug?(AppConstants.debug_url + '/GetVisits') : (AppConstants.live_url + '/GetVisits'),
-
+            params : {
+                status : status,
+                employee_id : employee_id
+            }
         }).then((Response)=>{
             if (Response.status == 200){
-                let resolved_data = []
-                for(let i=0; i<Response.data.length; i++){
-                    //console.log(Response.data[i])
-                    axios.get(Response.data[i]['Farmer_id']).then((response)=>{
-                        resolved_data.push({...Response.data[i] , 'farmer_info':response.data})
-                        // console.log(resolved_data)
-                    })
-                }
-                // console.log(resolved_data)
-                setTimeout(()=>{
-                    onSuccess(resolved_data)
-                },500)
+
+                onSuccess(Response.data)
+                
 
             }else {
                 onError()
