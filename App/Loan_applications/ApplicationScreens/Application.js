@@ -11,6 +11,7 @@ import NumberFormat from 'react-number-format'
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import DialogInput from 'react-native-dialog-input';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import * as mime from 'react-native-mime-types'
 
@@ -27,6 +28,8 @@ function Application(props) {
   const [profile , setprofile] = useState(props.route.params['Profile_info'])
   const [LoanItems , setLoanItems] = useState(redux_state['Loan_app_details'])
   const [current_pic , setCurrent_pic] = useState(null)
+
+  
 
   const calculate_total = () => {
     let total = 0;
@@ -81,7 +84,7 @@ function Application(props) {
         </View>
 
         <View style = {styles.info}>
-            <Text style = {styles.text_info}>Farmer id : #00001</Text>
+            <Text style = {styles.text_info}>Farmer id : {profile.id}</Text>
             <Text style = {styles.text_info}>Name : {profile.Name}</Text>
             <Text style = {styles.text_info}>Gender : {profile.Gender}</Text>
             <Text style = {styles.text_info}>Tel.no : {profile.Phone_number}</Text>
@@ -135,13 +138,13 @@ function Application(props) {
           {
             redux_state['Loan_app_details'].map((item ,index , arr)=>(
               <View style = {styles.LoanItem}>
-                  <Text>{(item.Name).length >= 7?(item.Name).slice(0,6) + '...' : (item.Name)}</Text>
-                  <Text>{item.Quantity} x shs. {item.Price}</Text>
+                  <Text style = {{...styles.th_font , fontWeight : 'normal'}}>{(item.Name).length >= 7?(item.Name).slice(0,6) + '...' : (item.Name)}</Text>
+                  <Text style = {{...styles.th_font , fontWeight : 'normal'}}>{item.Quantity} x shs. {item.Price}</Text>
                  
                   <NumberFormat value = { (item.Quantity * item.Price) } displayType = {'text'}
                     thousandSeparator = {true}
                     prefix = {'shs.'}
-                    renderText={value => <Text>{value}</Text>}
+                    renderText={value => <Text style = {{...styles.th_font , fontWeight : 'normal'}}>{value}</Text>}
                   />
                   <TouchableOpacity onPress = {()=>{
                     var new_arr = redux_state.Loan_app_details.map(value => Object.assign({}, value));
@@ -165,7 +168,7 @@ function Application(props) {
             thousandSeparator = {true}
             renderText={value => (
               <View style = {styles.Ov_data}>
-                  <Text style = {{fontSize : 16,fontWeight : 'bold'}}>Overall Total : shs.{value}</Text>
+                  <Text style = {{fontSize : RFValue(16),fontWeight : 'bold'}}>Overall Total : shs.{value}</Text>
               </View>
               )
             }
@@ -245,7 +248,7 @@ const styles = StyleSheet.create({
       alignItems : 'flex-start',
   },
   text_info : {
-      fontSize : 15,
+      fontSize : RFValue(16),
       fontWeight : 'normal',
   } ,
   LoanView : {
@@ -261,7 +264,7 @@ const styles = StyleSheet.create({
     alignItems : 'center'
   },
   heading : {
-    fontSize : 15,
+    fontSize : RFValue(15),
     fontWeight : 'bold',
   },
   items : {
@@ -284,7 +287,7 @@ const styles = StyleSheet.create({
     alignItems : 'center'
   },
   th_font : {
-    fontSize : 13,
+    fontSize : RFValue(13),
     fontWeight : 'bold',
   },
   overall : {
@@ -319,7 +322,7 @@ const styles = StyleSheet.create({
     alignItems : 'center',
   },
   head_txt : {
-    fontSize : 15,
+    fontSize : RFValue(17),
     fontWeight : 'bold',
   }
 

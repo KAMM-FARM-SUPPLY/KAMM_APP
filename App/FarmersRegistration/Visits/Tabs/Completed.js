@@ -4,10 +4,17 @@ import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 import {Avatar} from 'react-native-elements'
 import { FlatList } from 'react-native-gesture-handler';
 import Separator from '../../../Components/Separator';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { FarmerVisits} from '../../../Helpers/Visits';
+
 
 function Completed(props) {
 
-  const [completed_visits , set_completed_visits] = useState(['Test' , 'Test 2' , 'Test 3'])
+  const [completed_visits , set_completed_visits] = useState()
+
+  useEffect(()=>{
+    FarmerVisits.Get_Visits(true , 1 ,set_completed_visits , ()=>{alert('Something is wrong')});
+  },[])
 
 
   return (
@@ -29,8 +36,8 @@ function Completed(props) {
                   <View style = {styles.pic_description}> 
                     <Avatar rounded icon = {{ name : 'clock-o' , size : 25 , color : 'green' , type: 'font-awesome' }} />
                     <View style = {styles.name_info}>
-                        <Text style = {{ fontWeight : 'bold' }}>Ntambi Nassim Sewaya</Text>
-                        <Text>Scheduled Date : 21/07/2023</Text>
+                        <Text style = {{ fontWeight : 'bold' , fontSize : RFValue(15) }}>{item.Farmer_id.Name + " " + item.Farmer_id.Given_name}</Text>
+                        <Text style = {{fontSize : RFValue(13)}}>Scheduled Date : {new Date(item.scheduled_date).toLocaleDateString()}</Text>
                     </View>
                   </View>
 

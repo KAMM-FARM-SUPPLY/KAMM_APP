@@ -34,7 +34,7 @@ function Profile_pic(props) {
                                   mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                   allowsEditing: true,
                                   aspect: [4, 3],
-                                  quality: 1,
+                                  quality: 0.2,
                                 });
                                 if (!result.cancelled) {
                                     SetPic(result.uri)
@@ -58,7 +58,7 @@ function Profile_pic(props) {
                 
                 <TouchableOpacity style = {{ position : 'absolute' , top : ScreenHeight * 0.31, right : ScreenWidth *0.3 }} onPress = {
                     async () => {
-                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                         if (image.uri){
                             SetPic(image.uri)
                             setTimeout(()=>{

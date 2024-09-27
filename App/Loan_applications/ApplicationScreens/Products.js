@@ -5,6 +5,8 @@ import Separator from '../../Components/Separator'
 import { ScreenWidth , ScreenHeight } from 'react-native-elements/dist/helpers'
 import DialogInput from 'react-native-dialog-input';
 import {useDispatch, useSelector} from 'react-redux'
+import { RFValue } from 'react-native-responsive-fontsize';
+import NumberFormat from 'react-number-format'
 
 
 function Products(props) {
@@ -44,9 +46,14 @@ function Products(props) {
               setActive_item(Item.item)
               setVisible(true)
             }}>
-              <Text>{Item.item.id}</Text>
-              <Text>{Item.item.name}</Text>
-              <Text>shs.{Item.item.selling_rate}</Text>
+              <Text style = {styles.font_text}>{Item.item.id}</Text>
+              <Text style = {styles.font_text}>{Item.item.name}</Text>
+
+              <NumberFormat value = {Item.item.selling_rate} displayType = {'text'}
+                    thousandSeparator = {true}
+                    prefix = {'shs.'}
+                    renderText={value => <Text style = {styles.font_text}>{value}</Text>}
+                  />
               <Avatar size="large" icon = {{ name : 'product-hunt' , type : 'font-awesome', color : '#246EE9' , size : 40 }} rounded = {false}/>
 
             </TouchableOpacity>
@@ -96,6 +103,10 @@ const styles = StyleSheet.create({
     flexDirection : 'row',
     alignItems : 'center',
     justifyContent : 'space-around'
+  },
+  font_text : {
+    fontSize : RFValue(14),
+    fontWeight : 'bold'
   }
 
 })

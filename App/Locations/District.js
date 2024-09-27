@@ -4,15 +4,27 @@ import { ScreenWidth } from 'react-native-elements/dist/helpers'
 import {useDispatch, useSelector} from 'react-redux'
 import Separator from '../Components/Separator'
 import { Location } from '../Helpers/Location'
+import AppConstants from '../Constants/AppConstants'
+
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 
 function District(props) {
     const [districts , setdistricts] = useState(null)
 
-    const [test , setTest] = useState(['ddd','ssss','sdff','weeee','wwee'])
+    const redux_state = useSelector(state => state.Reducer)
+
 
     useEffect(()=>{
-        Location.Get_districts(setdistricts)
+
+        if (AppConstants.connected){
+            Location.Get_districts(setdistricts)
+        }else{
+            setdistricts(redux_state['retrieved_data']['Locations'])
+        }
+
+
     },[])
 
     const dispatch = useDispatch()
@@ -101,7 +113,7 @@ const styles = StyleSheet.create({
         
     },
     district : {
-        fontSize : 16,
+        fontSize: RFValue(16), // Use responsive font size
         fontWeight : 'bold',
     },
     comp : {

@@ -11,7 +11,7 @@ export class LoanApplication{
                 'content-type' : 'multipart/form-data',
             }
         }).then((Response)=>{
-            console.log(Response.status)
+            //console.log(Response.status)
             if (Response.status == 201){
                 onSuccess(Response.data)
             }else{
@@ -26,8 +26,8 @@ export class LoanApplication{
         axios({
             method : 'GET',
             url : AppConstants.Debug ?
-            (AppConstants.debug_url + '/Getapplications/' + ((query_id != null) ? ('?id=' + query_id) : ('')) + ((status != null)?('?status=' + status) : (''))) :
-            (AppConstants.live_url + '/Getapplications/' + ((query_id != null) ? ('?id=' + query_id) : ('')) + ((status != null)?('?status=' + status) : ('')))
+            (AppConstants.debug_url + '/Queryapplications' + ((query_id != null) ? ('?id=' + query_id) : ('')) + ((status != null)?('?Status=' + status) : (''))) :
+            (AppConstants.live_url + '/Queryapplications' + ((query_id != null) ? ('?id=' + query_id) : ('')) + ((status != null)?('?Status=' + status) : ('')))
 
         }).then((Response)=>{
             if (Response.status == 200){

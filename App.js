@@ -3,11 +3,12 @@ import { Text, View } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import {connect , Provider} from 'react-redux';
-import store from './redux/Default_state/State.js'
+import {store , persistor} from './redux/Default_state/State.js'
 import * as Font from 'expo-font';
 import { Initial } from './App/Initial.js';
+import { Entry } from './App/Entry/Entry.js';
 import { StatusBar } from 'expo-status-bar';
-
+import { PersistGate } from 'redux-persist/integration/react';
 // Keep the splash screen visible while we fetch resources
 
 export default function App(props) {
@@ -21,9 +22,10 @@ export default function App(props) {
 
   return (
     <Provider store = {store}>
-      <StatusBar style="dark" />
-      <Initial />
-      
+      <PersistGate loading={null} persistor={persistor}>
+        <StatusBar style="dark" />
+        <Entry/>
+      </PersistGate>
     </Provider>
   );
 }

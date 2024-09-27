@@ -3,14 +3,27 @@ import * as mime from 'react-native-mime-types'
 export default Reducer = (state = {
     'default_color' : 'blue',
     Loan_app_details : [],
+
+
+    //Locally stored created farmer profiles
+    unsynced_profile_data : [],
+
+    //Data synced from the server 
+    retrieved_data : null,
+
+
+    //Locally stored created Loan applications
+    unsynced_application_data : [],
+
     Loan_app_screen_key : '',
-    Farmer_info_visit : false
+    Farmer_info_visit : false,
+    persistent_value : null
 } , action ) => {
     switch(action.type){
         case 'change_color' : {
             return {
                 ...state,
-                default_color : 'red'
+                default_color : action.color
             }
             
         }
@@ -122,7 +135,45 @@ export default Reducer = (state = {
             }
         }
 
-        
+        case 'Store_unsynced_profile' : {
+            return {
+                ...state,
+                unsynced_profile_data : [
+                    ...state.unsynced_profile_data,
+                    action.value
+                ]
+            }
+        }
+        case 'Remove_unsynced_profile' : {
+            return {
+                ...state,
+                unsynced_profile_data : state.unsynced_profile_data.filter((item , index)=> index !== action.index)
+            }
+        }
+
+
+        case 'Store_unsynced_application' : {
+            return {
+                ...state,
+                unsynced_application_data : [
+                    ...state.unsynced_application_data,
+                    action.value
+                ]
+            }
+        }
+        case 'Remove_unsynced_application' : {
+            return {
+                ...state,
+                unsynced_application_data : state.unsynced_application_data.filter((item , index)=> index !== action.index)
+            }
+        }
+
+        case 'Store_retrieved_data' : {
+            return {
+                ...state,
+                retrieved_data : action.data
+            }
+        }
 
         default :
             return state

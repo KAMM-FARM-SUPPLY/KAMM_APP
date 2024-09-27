@@ -5,16 +5,33 @@ import Separator from '../../Components/Separator'
 import {useDispatch, useSelector} from 'react-redux'
 import { FarmerLogic } from '../../Helpers/Farmer'
 import { ScreenWidth , ScreenHeight } from 'react-native-elements/dist/helpers'
+import AppConstants from '../../Constants/AppConstants'
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 function FarmersList(props) {
     const [Farmers , setFarmers] = useState(null)
-    useEffect(()=>{
 
-        FarmerLogic.get_farmer_village_list(props.route.params['name'] , setFarmers)
+    const dispatch = useDispatch()
+    const redux_state = useSelector(state => state.Reducer)
+
+
+    useEffect(()=>{
+        if (AppConstants.connected){
+            FarmerLogic.get_farmer_village_list(props.route.params['name'] , setFarmers)
+        }else{
+            let farmer_list = []
+            redux_state['retrieved_data']['farmers'].forEach(element => {
+                if(element['Village'] == props.route.params['name']){
+                    farmer_list.push(element)
+                }
+            });
+            setFarmers(farmer_list)
+            
+        }
         
     },[])
 
-    const dispatch = useDispatch()
 
     if (Farmers == null){
         return (
@@ -38,12 +55,12 @@ function FarmersList(props) {
                         <Text style = {styles.heading}> Farmers List  </Text>
                         <View style = {styles.flatcontainer}>
                             <FlatList
-                                ItemSeparatorComponent={()=><Separator/>}
+                                // ItemSeparatorComponent={()=><Separator/>}
                                 contentContainerStyle = {{}}
                                 data = {Farmers}
                                 horizontal = {false}
                                 renderItem={(Profile , index)=>(
-                                    <TouchableOpacity  disabled = {(Profile.item.Active == 'True')?(false) : (true)} onPress = {()=>{
+                                    <TouchableOpacity  disabled = {!Profile.item.Active} onPress = {()=>{
                                         if(props.route.params['LoanApplications']){
                                             dispatch({type : 'Loan_identity' , Loan_id : Profile.item.id})
                                             props.navigation.navigate('Application' , {'Profile_info' : Profile.item})
@@ -51,12 +68,22 @@ function FarmersList(props) {
                                             props.navigation.navigate('Profile' , {'Profile_info' : Profile.item})
                                         }
                                         
-                                    }} style = {{...styles.comp , opacity : (Profile.item.Active ==='True')?(1) : (0.3)}}>
+                                    }} style = {{...styles.comp , opacity : (Profile.item.Active)?(1) : (0.3)}}>
                                         <View style = {styles.Farmer_item}>
                                             <View style = {{width : 70 }}>
                                                 <Avatar rounded source = {{ uri : Profile.item.Profile_picture }} size = {'medium'}  />
                                             </View>
-                                            <Text>{Profile.item.Name}</Text>
+
+
+                                            <View style = {{
+                                                
+                                            }}>
+                                                <Text style = {{...styles.Normal_txt , fontSize : RFValue(15) , fontWeight : 'bold'}}>{Profile.item.Name + " " + Profile.item.Given_name}</Text>
+                                                <Text style={styles.Normal_txt}>{Profile.item.Phone_number}</Text>
+                                                <Text style={styles.Normal_txt}>{Profile.item.Village}</Text>
+
+                                            </View>
+                                            
                                         </View>
                                     </TouchableOpacity>
                                 )}
@@ -121,6 +148,9 @@ const styles = StyleSheet.create({
         top : 0.05 * ScreenHeight,
         fontSize : 16,
         fontWeight : 'bold',
+    },
+    Normal_txt: {
+        fontSize: RFValue(13),
     },
 
     Indicator : {

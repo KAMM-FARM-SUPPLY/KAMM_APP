@@ -10,6 +10,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import PhoneInput from "react-native-phone-number-input";
 import * as mime from 'react-native-mime-types'
 
+import { RFValue } from 'react-native-responsive-fontsize';
+
+
 
 
 function Kin(props) {
@@ -113,7 +116,7 @@ function Kin(props) {
                                   mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                   allowsEditing: true,
                                   aspect: [4, 3],
-                                  quality: 1,
+                                  quality: 0.2,
                                 });
                                 if (!result.cancelled) {
                                     SetPic(result.uri)
@@ -137,7 +140,7 @@ function Kin(props) {
                 
                 <TouchableOpacity style = {{ position : 'absolute' , top : ScreenHeight * 0.31, right : ScreenWidth *0.3 }} onPress = {
                     async () => {
-                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                         if (image.uri){
                             SetPic(image.uri)
                             setTimeout(()=>{
@@ -157,7 +160,7 @@ function Kin(props) {
         <View style = {styles.info}>
 
             <View style = {styles.input}>
-                <Text>Surname *</Text>
+                <Text style = {styles.key_text}>Surname *</Text>
                 <TextInput
                     autoCapitalize='words'
                     placeholder='Enter your surname'
@@ -170,7 +173,7 @@ function Kin(props) {
             </View>
 
             <View style = {styles.input}>
-                <Text>Given Name *</Text>
+                <Text style = {styles.key_text}>Given Name *</Text>
                 <TextInput
                     placeholder='Enter given names'
                     autoCapitalize='words'
@@ -185,7 +188,7 @@ function Kin(props) {
             
             <View style = {{...styles.input , height : 0.14 * ScreenHeight}}>
                 <View style = {styles.error}>
-                    <Text>Telephone number *</Text>
+                    <Text style = {styles.key_text}>Telephone number *</Text>
                     {(valid)?(
                         <View style = {styles.validate_icon}>
                             <Avatar rounded containerStyle = {{ backgroundColor : 'green' , elevation :10  }} size = {'small'} icon = {{  name : 'check' , color : 'white', type : 'font-awesome' , size : 16 }}  />
@@ -220,7 +223,7 @@ function Kin(props) {
 
             <View style = {styles.input}>
                 <View style = {styles.error}>
-                    <Text>NIN number * </Text>
+                    <Text style = {styles.key_text}>NIN number * </Text>
                     {(NIN_char == 14 || NIN_char == 0)?(
                         <View style = {styles.validate_icon}>
                             {(NIN.length > 0) ? (
@@ -420,7 +423,7 @@ const styles = StyleSheet.create({
         alignItems : 'center'
     },
     heading : {
-        fontSize : 16,
+        fontSize : RFValue(16),
         fontWeight : 'bold',
     },
     input : {
@@ -479,6 +482,9 @@ const styles = StyleSheet.create({
             flexDirection : 'row',
             justifyContent : 'space-around',
             alignItems : 'center',
+        },
+        key_text : {
+            fontSize : RFValue(14)
         }
 
 })

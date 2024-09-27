@@ -9,10 +9,21 @@ import Pending from './OverviewTabs/Pending'
 const Tab = createMaterialTopTabNavigator()
 
 function GeneralOverview(props) {
+
+  
+
+  
+
   return (
     <Tab.Navigator>
-        <Tab.Screen name ="Verified" component = {Verified}/>
-        <Tab.Screen name = "Pending verification" component = {Pending}/>
+        <Tab.Screen name ="Verified"
+           children={()=> <Verified {...props}/>}
+        />
+
+        <Tab.Screen 
+          name = "Pending verification"
+          children={()=><Pending {...props}/>}
+          />
     </Tab.Navigator>
   )
 }
