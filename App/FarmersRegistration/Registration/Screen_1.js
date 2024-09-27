@@ -155,6 +155,8 @@ function Screen_1(props) {
 
     useEffect(()=>{
 
+        dispatch({type : 'change_color' , color : 'orange'})
+        
         if (redux_state['Farmer_info_visit'] != false){
             //Filling in the fields 
             let info = redux_state['Farmer_info_visit']
@@ -176,6 +178,8 @@ function Screen_1(props) {
 
         }
     
+        //dispatch({type : 'change_color'})
+
     },[])
 
     

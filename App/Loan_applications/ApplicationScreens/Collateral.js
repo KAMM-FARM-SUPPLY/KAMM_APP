@@ -13,6 +13,9 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import * as Location from 'expo-location';
 import * as mime from 'react-native-mime-types'
 
+import { RFValue } from 'react-native-responsive-fontsize';
+
+
 
 
 
@@ -199,7 +202,7 @@ function Collateral(props) {
                                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                 allowsEditing: true,
                                 aspect: [4, 3],
-                                quality: 1,
+                                quality: 0.2,
                             });
                             if (!result.canceled) {
                                 setLetter(result.uri)
@@ -224,7 +227,7 @@ function Collateral(props) {
                 <View style = {styles.cam_icon}>
                     <TouchableOpacity onPress = {
                     async () => {
-                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                         if (image.uri){
                             setLetter(image.uri)
                             setTimeout(()=>{
@@ -291,7 +294,7 @@ function Collateral(props) {
                                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                 allowsEditing: true,
                                 aspect: [4, 3],
-                                quality: 1,
+                                quality: 0.2,
                             });
                             if (!result.canceled) {
                                 setPic_1({Image : result.uri , description : '' })
@@ -371,7 +374,7 @@ function Collateral(props) {
                                 <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(1)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_1({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -400,7 +403,7 @@ function Collateral(props) {
                                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                 allowsEditing: true,
                                 aspect: [4, 3],
-                                quality: 1,
+                                quality: 0.2,
                             });
                             if (!result.canceled) {
                                 setPic_2({Image : result.uri , description : ''})
@@ -433,7 +436,7 @@ function Collateral(props) {
                                     <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(2)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_2({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -481,7 +484,7 @@ function Collateral(props) {
                                 <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(2)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_2({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -510,7 +513,7 @@ function Collateral(props) {
                                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                 allowsEditing: true,
                                 aspect: [4, 3],
-                                quality: 1,
+                                quality: 0.2,
                             });
                             if (!result.canceled) {
                                 setPic_3({Image : result.uri , description : ''})
@@ -543,7 +546,7 @@ function Collateral(props) {
                                     <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(3)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_3({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -591,7 +594,7 @@ function Collateral(props) {
                                 <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(3)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_3({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -620,7 +623,7 @@ function Collateral(props) {
                                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                 allowsEditing: true,
                                 aspect: [4, 3],
-                                quality: 1,
+                                quality: 0.2,
                             });
                             if (!result.canceled) {
                                 setPic_4({Image : result.uri , description : ''})
@@ -653,7 +656,7 @@ function Collateral(props) {
                                     <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(4)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_4({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -701,7 +704,7 @@ function Collateral(props) {
                                 <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(4)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_4({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -730,7 +733,7 @@ function Collateral(props) {
                                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                 allowsEditing: true,
                                 aspect: [4, 3],
-                                quality: 1,
+                                quality: 2,
                             });
                             if (!result.canceled) {
                                 setPic_5({Image : result.uri , description : ''})
@@ -763,7 +766,7 @@ function Collateral(props) {
                                     <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(5)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_5({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -811,7 +814,7 @@ function Collateral(props) {
                                 <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(5)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_5({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -840,7 +843,7 @@ function Collateral(props) {
                                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                 allowsEditing: true,
                                 aspect: [4, 3],
-                                quality: 1,
+                                quality: 0.2,
                             });
                             if (!result.canceled) {
                                 setPic_6({Image : result.uri , description : ''})
@@ -873,7 +876,7 @@ function Collateral(props) {
                                     <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(6)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_6({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -921,7 +924,7 @@ function Collateral(props) {
                                 <TouchableOpacity onPress = {
                                     async () => {
                                         setActive_pic(6)
-                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                                         if (image.uri){
                                             setPic_6({Image : image.uri , description : ''})
                                             setTimeout(()=>{
@@ -977,7 +980,7 @@ const styles = StyleSheet.create({
         alignItems : 'center'
     },
     heading : {
-        fontSize : 17,
+        fontSize : RFValue(18),
         fontWeight : 'bold',
     },
     letter : {

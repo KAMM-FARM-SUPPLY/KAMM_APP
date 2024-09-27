@@ -14,6 +14,8 @@ function FarmerProfile(props) {
 
     const profile = props.route.params['Profile_info']
     const partial = props.route.params['partial']
+
+    //console.log(props.route.params['normal'])
     // if (partial) {
     //     profile = redux_state['registration']
 
@@ -21,17 +23,21 @@ function FarmerProfile(props) {
 
 
     useEffect(()=>{
-        const backAction = () => {
-            props.navigation.navigate('Welcome')
-            return true;
-        };
-    
-        const backHandler = BackHandler.addEventListener(
-          'hardwareBackPress',
-          backAction,
-        );
-    
-        return () => backHandler.remove();
+
+        if (!props.route.params['normal']){
+            const backAction = () => {
+                props.navigation.navigate('Welcome')
+                return true;
+            };
+        
+            const backHandler = BackHandler.addEventListener(
+              'hardwareBackPress',
+              backAction,
+            );
+        
+            return () => backHandler.remove();
+        }
+        
       },[])
   return (
     <SafeAreaView style = {styles.safeAreaView}>
@@ -49,7 +55,7 @@ function FarmerProfile(props) {
                 </View>
 
                 <View style = {styles.info}>
-                    <Text style = {styles.text_info}>Farmer id : {profile.id ? (profile.id) : ("#0001")}</Text>
+                    <Text style = {styles.text_info}>Farmer id : {profile.id ? (profile.id) : ("Undetermined")}</Text>
                     <Text style = {styles.text_info}>Name : {profile.Name}</Text>
                     <Text style = {styles.text_info}>Gender : {profile.Gender}</Text>
                     <Text style = {styles.text_info}>Tel.no : {profile.Phone_number}</Text>

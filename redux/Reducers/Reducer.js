@@ -23,7 +23,7 @@ export default Reducer = (state = {
         case 'change_color' : {
             return {
                 ...state,
-                default_color : 'red'
+                default_color : action.color
             }
             
         }
@@ -142,6 +142,29 @@ export default Reducer = (state = {
                     ...state.unsynced_profile_data,
                     action.value
                 ]
+            }
+        }
+        case 'Remove_unsynced_profile' : {
+            return {
+                ...state,
+                unsynced_profile_data : state.unsynced_profile_data.filter((item , index)=> index !== action.index)
+            }
+        }
+
+
+        case 'Store_unsynced_application' : {
+            return {
+                ...state,
+                unsynced_application_data : [
+                    ...state.unsynced_application_data,
+                    action.value
+                ]
+            }
+        }
+        case 'Remove_unsynced_application' : {
+            return {
+                ...state,
+                unsynced_application_data : state.unsynced_application_data.filter((item , index)=> index !== action.index)
             }
         }
 

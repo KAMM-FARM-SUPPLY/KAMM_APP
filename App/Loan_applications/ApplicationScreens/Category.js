@@ -1,5 +1,5 @@
 import React , {useEffect , useState}from 'react'
-import {View , Text , Pressable , StyleSheet , TouchableOpacity , FlatList , ActivityIndicator} from 'react-native'
+import {View , Text , Pressable , StyleSheet , TouchableOpacity , FlatList , ActivityIndicator , ScrollView} from 'react-native'
 import { ScreenHeight , ScreenWidth } from 'react-native-elements/dist/helpers'
 import {useDispatch, useSelector} from 'react-redux'
 import {Avatar} from 'react-native-elements'
@@ -8,6 +8,9 @@ import { Icon } from 'react-native-elements'
 import axios from "axios";
 import AppConstants from '../../Constants/AppConstants'
 import { Products } from '../../Helpers/Products'
+import { RFValue } from 'react-native-responsive-fontsize';
+
+
 
 export const Category = (props) => {
 
@@ -32,13 +35,13 @@ export const Category = (props) => {
     return (
       <View style = {styles.Indicator}>
           <ActivityIndicator/>
-          <Text>Loading Applications...</Text>
+          <Text>Loading Categories...</Text>
       </View>
     )
   }
 
   return (
-    <View style={styles.screen}>
+    // <ScrollView style={styles.screen}>
 
         <FlatList
           numColumns={2}
@@ -50,7 +53,7 @@ export const Category = (props) => {
                 props.navigation.navigate('Products' , {Category : item.item})
             }}>
               <Avatar size="large" icon = {{ name : 'tasks' , type : 'font-awesome', color : '#246EE9' , size : 40 }} rounded = {false}/>
-              <Text>{item.item.name}</Text>
+              <Text style = {{fontSize : RFValue(14) , fontWeight : 'bold'}}>{item.item.name}</Text>
             </TouchableOpacity>
           )}
         />
@@ -58,7 +61,7 @@ export const Category = (props) => {
 
         
 
-    </View>
+    // </ScrollView>
   )
 }
 
@@ -83,16 +86,14 @@ const styles = StyleSheet.create({
 
   },
   item : {
-    height : ScreenHeight * 0.25,
-    width : ScreenWidth * 0.35,
-    // backgroundColor : 'red',
-    borderRadius : 10,
-    elevation : 5,
-    flexDirection : 'column',
-    justifyContent : 'space-around',
-    alignItems : 'center',
-
-    
+    height: ScreenHeight * 0.25,
+    borderRadius: 10,
+    elevation: 5,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexBasis: '48%',
+    flexShrink: 1,
     
   },
   Indicator : {

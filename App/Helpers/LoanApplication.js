@@ -11,7 +11,7 @@ export class LoanApplication{
                 'content-type' : 'multipart/form-data',
             }
         }).then((Response)=>{
-            console.log(Response.status)
+            //console.log(Response.status)
             if (Response.status == 201){
                 onSuccess(Response.data)
             }else{

@@ -1,18 +1,50 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity , ScrollView , ActivityIndicator } from 'react-native';
+import React, {useState , useEffect} from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity , ScrollView , ActivityIndicator, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { ScreenWidth } from 'react-native-elements/dist/helpers';
+import {useDispatch, useSelector , connect} from 'react-redux'
+import Farmer from '../../Helpers/FarmerRegistration';
 
 
-const AppScreen = () => {
-  // Replace these values with your actual data
+function Status (props) {
+
+  const dispatch = useDispatch()
+  const redux_state = props.state.Reducer
+
+
+  const [uploadingfarmers , setuploadingfarmers] = useState(false)
+  const [uploadingapplications , setuploadingapplications] = useState(false)
+
+  const [unsyncedFarmers , setunsyncedFarmers] = useState(redux_state['unsynced_profile_data'])
+  const [unsyncedFarmersCount , setunsyncedFarmersCount] = useState(redux_state['unsynced_profile_data'].length)
+  const [unsyncedApplications , setunsyncedApplications] = useState(0)
+
+
+  useEffect(()=>{
+    //dispatch({type : 'Remove_unsynced_profile'})
+    //console.log(redux_state['unsynced_profile_data'])
+    //console.log('logging')
+    //setunsyncedApplications(1)
+  },[])
+
+
   const isConnected = true;
   const avatarImage = 'http://10.10.134.122:8020/Media/Profile_pic/2024/01/30/073c62f1-4105-4677-aee5-6e20fab949a6.jpeg';
   const name = 'John Doe';
   const group = 'Field Officers Group';
   const farmersRegistered = 120;
   const loanApplications = 50;
+
+  const handle_on_complete = () => {
+    setunsyncedFarmersCount(unsyncedFarmersCount - 1) 
+
+  }
+
+  
+  const onError = () => {
+    Alert.alert("Syncing Farmers" , "An error occured during the upload of the profiles")
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -45,20 +77,49 @@ const AppScreen = () => {
           
           <TouchableOpacity onPress={()=>{
 
+            redux_state['unsynced_profile_data'].forEach(element => {
+              //packaging the profile 
+              const form_data = new FormData()
+              form_data.append('back-side(NIN)' , element['back-side(NIN)'])
+              form_data.append('front-side(NIN)' , element['front-side(NIN)'])
+              form_data.append('Profile-photo' , element['Profile-photo'])
+
+              Farmer.Register({...element} , form_data , handle_on_complete,onError)
+
+
+            });
+
+
+            for(let i = 0; i <= redux_state['unsynced_profile_data'].length; i++){
+                  dispatch({type : 'Remove_unsynced_profile' , index : i})
+            }
+
+
+            Alert.alert("Data Sync" , "All profiles have been uploaded successfully")
+
           }} style = {{
             ...styles.statusContainer ,
-            width : 0.3 * ScreenWidth
+            width : 0.4 * ScreenWidth
             
             }}>
-            <ActivityIndicator size="small" color="green" />
-            {/* <Icon name={'arrow-up'} size={15} color={'green'} /> */}
-            <Text style={styles.statText}>4 Farmers</Text>
+              {
+                (uploadingfarmers) ? (
+                  <ActivityIndicator size="small" color="green" />
+                ) : (
+                  <Icon name={'arrow-up'} size={15} color={'green'} />
+                )
+              }
+            <Text style={styles.statText}>{redux_state['unsynced_profile_data'].length} Farmer(s) unsynced</Text>
           </TouchableOpacity>
 
         </View>
         
 
-        <TouchableOpacity style={styles.viewButton}>
+        <TouchableOpacity style={styles.viewButton} onPress={()=>{
+          //Rerouting to the farmers screen
+          props.navigation.navigate('General Overview' , {Added_by : 3})
+
+        }}>
           <Text style={styles.viewButtonText}>View Farmers</Text>
 
         </TouchableOpacity>
@@ -94,6 +155,18 @@ const AppScreen = () => {
     </ScrollView>
   );
 };
+
+const mapStateToProps = (state_redux) => {
+  let state  = state_redux
+  return {state}    
+}
+
+const mapDispatchToProps = (dispatch) => ({
+}) 
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Status);
+
 
 const styles = StyleSheet.create({
   container: {
@@ -157,4 +230,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppScreen;

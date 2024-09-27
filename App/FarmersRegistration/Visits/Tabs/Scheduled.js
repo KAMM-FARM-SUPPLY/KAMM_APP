@@ -33,7 +33,10 @@ function Scheduled(props) {
 
 
   useEffect(()=>{
-    FarmerVisits.Get_Visits(false , 2 ,set_scheduled_visits , ()=>{alert('Something is wrong')});
+
+    FarmerVisits.Get_Visits(false , 3 ,set_scheduled_visits , ()=>{alert('Something is wrong')});
+
+    
   },[])
 
   if (scheduled_visits == null){

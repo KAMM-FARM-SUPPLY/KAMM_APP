@@ -6,6 +6,8 @@ import { LoanApplication } from '../../Helpers/LoanApplication';
 import Spinner from 'react-native-loading-spinner-overlay'
 import FormData, {getHeaders} from 'form-data'
 import Collateral from './Collateral';
+import AppConstants from '../../Constants/AppConstants'
+
 
 
 
@@ -36,7 +38,7 @@ function ApplicantSignature(props) {
         //console.log({...redux_state['Loan_app_kin'] , Signature : ''})
         //console.log(redux_state['Loan_identity'])
         //console.log(redux_state['Loan_app_collateral'])
-        console.log(redux_state['Loan_images'])
+        //console.log(redux_state['Loan_images'])
         //Loading the formdata
 
         //computing the total_cost for the Loan_app_details
@@ -45,31 +47,49 @@ function ApplicantSignature(props) {
             total_cost +=  (parseInt(redux_state['Loan_app_details'][i].Price) * parseInt(redux_state['Loan_app_details'][i].Quantity))
         }
 
-        const formdata = new FormData()
-        formdata.append('Loan_app_details' , JSON.stringify(redux_state['Loan_app_details']))
-        formdata.append('Loan_app_kin' , JSON.stringify(redux_state['Loan_app_kin']))
-        formdata.append('Loan_identity' , JSON.stringify({farmer : redux_state['Loan_identity'] , Signature : signature , Total_cost : total_cost}))
-        formdata.append('Loan_app_collateral' , JSON.stringify(redux_state['Loan_app_collateral']))
+        if (!AppConstants.connected){
 
-        //Loading images 
-        formdata.append('Active_picture' , redux_state['Loan_images']['Active_picture'])
-        formdata.append('LC1_letter' , redux_state['Loan_images']['LC1_letter'])
-        formdata.append('Kin_image' , redux_state['Loan_images']['Kin_image'])
-        formdata.append('front_side_id' , redux_state['Loan_images']['front_side_id'])
-        formdata.append('back_side_id' , redux_state['Loan_images']['back_side_id'])
+            dispatch({type : 'Store_unsynced_application' , value : {
+                Loan_app_details : redux_state['Loan_app_details'],
+                Loan_app_kin : redux_state['Loan_app_kin'],
+                Loan_identity : {...redux_state['Loan_identity'] , Signature : signature , Total_cost : total_cost},
+                Loan_app_collateral : redux_state['Loan_app_collateral'],
+                Loan_images : redux_state['Loan_images']
+    
+            }})
 
-        //Loading collateral images
-        for(let i=1; i<=6; i++){
-            if (redux_state['Loan_images']['Collateral_' + i]){
-                formdata.append('Collateral_' + i , redux_state['Loan_images']['Collateral_'+i])
+        } else {
+
+            const formdata = new FormData()
+            formdata.append('Loan_app_details' , JSON.stringify(redux_state['Loan_app_details']))
+            formdata.append('Loan_app_kin' , JSON.stringify(redux_state['Loan_app_kin']))
+            formdata.append('Loan_identity' , JSON.stringify({farmer : redux_state['Loan_identity'] , Signature : signature , Total_cost : total_cost}))
+            formdata.append('Loan_app_collateral' , JSON.stringify(redux_state['Loan_app_collateral']))
+    
+            //Loading images 
+            formdata.append('Active_picture' , redux_state['Loan_images']['Active_picture'])
+            formdata.append('LC1_letter' , redux_state['Loan_images']['LC1_letter'])
+            formdata.append('Kin_image' , redux_state['Loan_images']['Kin_image'])
+            formdata.append('front_side_id' , redux_state['Loan_images']['front_side_id'])
+            formdata.append('back_side_id' , redux_state['Loan_images']['back_side_id'])
+    
+            //Loading collateral images
+            for(let i=1; i<=6; i++){
+                if (redux_state['Loan_images']['Collateral_' + i]){
+                    formdata.append('Collateral_' + i , redux_state['Loan_images']['Collateral_'+i])
+                }
             }
+    
+    
+    
+            //formdata.append('Loan_images' , redux_state['Loan_images'])
+    
+            LoanApplication.RegisterApplication(formdata , onSuccess , onError)
+
         }
 
+        
 
-
-        //formdata.append('Loan_images' , redux_state['Loan_images'])
-
-        LoanApplication.RegisterApplication(formdata , onSuccess , onError)
 
     };
 

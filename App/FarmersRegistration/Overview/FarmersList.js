@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { FarmerLogic } from '../../Helpers/Farmer'
 import { ScreenWidth , ScreenHeight } from 'react-native-elements/dist/helpers'
 import AppConstants from '../../Constants/AppConstants'
+import { RFValue } from 'react-native-responsive-fontsize';
 
 
 function FarmersList(props) {
@@ -54,7 +55,7 @@ function FarmersList(props) {
                         <Text style = {styles.heading}> Farmers List  </Text>
                         <View style = {styles.flatcontainer}>
                             <FlatList
-                                ItemSeparatorComponent={()=><Separator/>}
+                                // ItemSeparatorComponent={()=><Separator/>}
                                 contentContainerStyle = {{}}
                                 data = {Farmers}
                                 horizontal = {false}
@@ -72,7 +73,17 @@ function FarmersList(props) {
                                             <View style = {{width : 70 }}>
                                                 <Avatar rounded source = {{ uri : Profile.item.Profile_picture }} size = {'medium'}  />
                                             </View>
-                                            <Text>{Profile.item.Name}</Text>
+
+
+                                            <View style = {{
+                                                
+                                            }}>
+                                                <Text style = {{...styles.Normal_txt , fontSize : RFValue(15) , fontWeight : 'bold'}}>{Profile.item.Name + " " + Profile.item.Given_name}</Text>
+                                                <Text style={styles.Normal_txt}>{Profile.item.Phone_number}</Text>
+                                                <Text style={styles.Normal_txt}>{Profile.item.Village}</Text>
+
+                                            </View>
+                                            
                                         </View>
                                     </TouchableOpacity>
                                 )}
@@ -137,6 +148,9 @@ const styles = StyleSheet.create({
         top : 0.05 * ScreenHeight,
         fontSize : 16,
         fontWeight : 'bold',
+    },
+    Normal_txt: {
+        fontSize: RFValue(13),
     },
 
     Indicator : {

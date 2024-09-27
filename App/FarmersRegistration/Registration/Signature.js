@@ -38,20 +38,20 @@ function Signature(props) {
 
       if ((redux_state['Farmer_info_visit'] != false)){
 
-        console.log(redux_state['registration'])
-        console.log(redux_state['registration_pics'])
+        //console.log(redux_state['registration'])
+        //console.log(redux_state['registration_pics'])
 
 
       }else {
         // dispatch({type : 'Add_field' , key : 'Signature' , value : signature})
-        // console.log(signature)
+        console.log(signature)
         setRegistering(true)
 
         //Checking for internet connectivity
         const connected = AppConstants.connected;
 
 
-        if (connected){
+        if (!connected){
 
           // Hit the apis
           const form_data = new FormData()
@@ -64,7 +64,7 @@ function Signature(props) {
 
         }else {
 
-          dispatch({type : 'Store_unsynced_profile' , value : {...redux_state['registration'] , ...redux_state['registration_pics']}})
+          dispatch({type : 'Store_unsynced_profile' , value : {...redux_state['registration'] , ...redux_state['registration_pics'] , 'Signature' : signature}})
 
 
           setTimeout(()=>{

@@ -38,7 +38,7 @@ function Pending(props) {
             })
         }
         
-      }, page , name);
+      }, page , name , (props.route.params != undefined)? (props.route.params['Added_by']) : (null));
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -121,7 +121,7 @@ function Pending(props) {
           data={UnverifiedUsers['items']}
           //keyExtractor={item => item.id.toString()} // Change 'id' to your unique key
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.item} onPress={() => props.navigation.navigate('Profile', { Profile_info: item })}>
+            <TouchableOpacity style={styles.item} onPress={() => props.navigation.navigate('Profile', { Profile_info: item , normal : true })}>
               <View style={styles.thumbnail}>
                 <Avatar rounded source={(connected)? ({uri :item.Profile_picture}) : (require('../../../../assets/user_default.jpg'))} size={'medium'} />
                 <View style={styles.Name}>
@@ -139,7 +139,7 @@ function Pending(props) {
             </TouchableOpacity>
           )}
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.5}
           ListFooterComponent={renderFooter}
         />
       </View>

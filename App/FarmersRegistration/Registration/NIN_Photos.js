@@ -42,7 +42,7 @@ function NIN_Photos(props) {
                         mediaTypes: ImagePicker.MediaTypeOptions.Images,
                         allowsEditing: true,
                         aspect: [4, 3],
-                        quality: 1,
+                        quality: 0.2,
                     });
                     if (!result.canceled) {
                         // const result = await Compressor.compress(result.uri);
@@ -68,7 +68,7 @@ function NIN_Photos(props) {
               <View style = {styles.cam_icon}>
                     <TouchableOpacity onPress = {
                     async () => {
-                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.8 , base64 : true})
+                        let image = await ImagePicker.launchCameraAsync({mediaTypes : ImagePicker.MediaTypeOptions.Images , allowsEditing : true , aspect : [4,3] , quality : 0.2 , base64 : true})
                         if (image.uri){
                             setfront_side(image.uri)
                             setTimeout(()=>{
